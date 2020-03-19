@@ -38,17 +38,19 @@ class ThanhToanWebView extends Component {
       hocSinhThanhToan: Utils.getGlobal(nGlobalKeys.childSelectedHocPhi, ''),
       loading: false,
     }
-    this.tien = Utils.ngetParam(this, "tongtien"),
-      this.msHocSinh = Utils.ngetParam(this, "msHocSinh"),
-      this.flag = false
-    this.publicIPip = '',
-      this.allBill,
-      this.dataError = ''
+    this.tien = Utils.ngetParam(this, "tongtien");
+    this.msHocSinh = Utils.ngetParam(this, "msHocSinh");
+    this.flag = false;
+    this.publicIPip = '';
+    this.allBill;
+    this.dataError = '';
   }
   _subThanhToan = async () => {
     Utils.nlog('msHocSinh', this.msHocSinh.SSCId)
     Utils.nlog('tien', this.tien)
     let res = await hocSinh_CreateOrders(this.msHocSinh.SSCId, this.tien)
+    Utils.nlog('hocSinh_CreateOrders', res)
+
     if (res.status == 1) {
       let ob = JSON.parse(res.error.message)
       var intervalId = setInterval(this.timer, 2000)
@@ -65,22 +67,22 @@ class ThanhToanWebView extends Component {
     }
   }
 
-  _tiepTuc = async () => {
-    let MaHocSinh = Utils.getGlobal(nGlobalKeys.IdHocSinh, null)
-    let ipppppp = Utils.getGlobal(nGlobalKeys.ipPublic, '');
-    let res = await hocSinh_CreateOrders(MaHocSinh, this.tien, ipppppp)
-    if (res.status == 1) {
-      let ob = JSON.parse(res.error.message);
-      var intervalId = setInterval(this.timer, 2000);
-      this.setState({
-        isThanhToanSuccees: true,
-        linkWebview: res.data.redirectURL.toString(),
-        resultURL: ob.resultURL,
-        isInWebview: true,
-        intervalId: intservalId
-      })
-    }
-  }
+  // _tiepTuc = async () => {
+  //   let MaHocSinh = Utils.getGlobal(nGlobalKeys.IdHocSinh, null)
+  //   let ipppppp = Utils.getGlobal(nGlobalKeys.ipPublic, '');
+  //   let res = await hocSinh_CreateOrders(MaHocSinh, this.tien, ipppppp)
+  //   if (res.status == 1) {
+  //     let ob = JSON.parse(res.error.message);
+  //     var intervalId = setInterval(this.timer, 2000);
+  //     this.setState({
+  //       isThanhToanSuccees: true,
+  //       linkWebview: res.data.redirectURL.toString(),
+  //       resultURL: ob.resultURL,
+  //       isInWebview: true,
+  //       intervalId: intservalId
+  //     })
+  //   }
+  // }
 
   componentDidMount() {
     this._subThanhToan()
@@ -187,17 +189,19 @@ class ThanhToanWebView extends Component {
               useWebKit={true}
               ref={refs => this.webCus = refs}
               source={{ uri: this.state.linkWebview }}
+              onMessage={(event)=> console.log('onMessage event------------------------',event.nativeEvent.data)}
               onNavigationStateChange={event => {
-                Utils.nlog('------------------------------------------event', event.url)
-                if (event.url.includes('https://e-invoicing.webmoney.ru/error.aspx')) {
-                  Utils.nlog('------------------------------------------', this.dataError)
-                  this.setState({ linkWebview: this.dataError }, () => {
-                    // if (this.webCus)
-                    //   this.webCus.reload()
-                  })
-                }
-                else {
-                }
+                Utils.nlog('------------------------------------------event', event)
+                Utils.nlog('------------------------------------------event.url', event.url)
+                // if (event.url.includes('https://e-invoicing.webmoney.ru/error.aspx')) {
+                //   Utils.nlog('------------------------------------------', this.dataError)
+                //   this.setState({ linkWebview: this.dataError }, () => {
+                //     // if (this.webCus)
+                //     //   this.webCus.reload()
+                //   })
+                // }
+                // else {
+                // }
               }}
             />
           </View>
@@ -226,14 +230,15 @@ class ThanhToanWebView extends Component {
               onEnd={this.onEnd}
             />
             <TouchableOpacity onPress={() => this.setState({ loading: false })}
-              style={{ padding: 5, backgroundColor: colors.colorPink3, borderRadius: 6, top: 0, right: 0, marginTop: isIphoneX() ? 50 : 25, marginRight: 10, position: 'absolute' }}>
-              <Text style={{ fontWeight: "600", fontSize: sizes.sText13, color: 'white' }}>ĐÓNG</Text>
+              style={{ padding: 5, backgroundColor: 'white', borderRadius: 6, top: 0, right: 0, marginTop: isIphoneX() ? 50 : 25, marginRight: 10, position: 'absolute' }}>
+              <Text style={{ fontWeight: "600", fontSize: sizes.sText13, color: colors.colorPink3 }}>ĐÓNG</Text>
             </TouchableOpacity>
           </View> : null}
       </View>
     )
   }
 }
+
 export const stPlayMedia = StyleSheet.create({
   backgroundVideo: {
     position: 'absolute',

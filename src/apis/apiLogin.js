@@ -7,9 +7,11 @@ import publicIP from 'react-native-public-ip';
 
 const PREFIX = "api/account/"
 const PREFIX1 = "api/dangkytaikhoan/"
-async function xacThucOTP(otp) {
-  let strBody = JSON.stringify({})
-}
+const PREFIX2 = "api/sms/"
+
+// async function xacThucOTP(otp) {
+//   let strBody = JSON.stringify({})
+// }
 
 async function Version() {
   let res = await Utils.get_apiTokenHeader(
@@ -18,6 +20,17 @@ async function Version() {
     false
   )
   Utils.nlog(PREFIX + 'Version')
+  return res
+}
+
+
+async function wsCpMt(phone) {
+  let RowID = Utils.getGlobal(nGlobalKeys.rowId)
+  let header = {
+    IdTaiKhoan: RowID
+  }
+  Utils.nlog(PREFIX2 + `wsCpMt?_soDienThoai=` + phone)
+  let res = await Utils.post_apiTokenHeader(PREFIX2 + `wsCpMt?_soDienThoai=` + phone, '111', header, false, false)
   return res
 }
 
@@ -61,6 +74,10 @@ async function apiLogin(PhoneNumber, Password) {
 }
 
 async function enterPhoneNumber(PhoneNumber) {
+  // let ph = PhoneNumber;
+  // ph = ph.slice(1, 10);
+  // ph = '84' + ph;
+  // Utils.nlog('---------------------ph', ph)
   let res = await Utils.get_api(
     PREFIX1 + "DangKyOTP?_soDienThoai=" + PhoneNumber,
     false,
@@ -95,12 +112,12 @@ async function onCheckLogin(PhoneNumber, Password) {
         .catch(error => {
         });
       let res1 = await infoPhuhuyenh()
-      Utils.nlog('---------- infoPhuhuyenh', res)
+      Utils.nlog('---------- ---------------------------------infoPhuhuyenh', res)
       if (res1.success == true) {
-        Utils.setGlobal(
-          nGlobalKeys.IdKhachHang_User,
-          res1.data
-        )
+        // Utils.setGlobal(
+        //   nGlobalKeys.IdKhachHang_User,
+        //   res1.data
+        // )
         Utils.setGlobal(
           nGlobalKeys.informationAccount,
           res1.data
@@ -111,11 +128,12 @@ async function onCheckLogin(PhoneNumber, Password) {
     } else return false
   }
 }
-async function accuracyOTP() {
+async function accuracyOTP(otp) {
   let IdUser = Utils.getGlobal(nGlobalKeys.IdUser, "")
   let PhoneNumber = await Utils.ngetStore(nkey.phonenumber, "")
   let IdCN = Utils.getGlobal(nGlobalKeys.IdCN, "")
-  let OTP = Utils.getGlobal(nGlobalKeys.OTP, null)
+  // let OTP = otp
+  let OTP = Utils.getGlobal(nGlobalKeys.OTP, "")
   let OTPTime = Utils.getGlobal(nGlobalKeys.OTPTime, "")
   let OTPTimeApp = moment()
     .utcOffset("+07:00")
@@ -253,5 +271,5 @@ export {
   xacNhanHocSinh,
   findstudent,
   avatar,
-  Version, updateAvatarHS
+  Version, updateAvatarHS, wsCpMt
 }

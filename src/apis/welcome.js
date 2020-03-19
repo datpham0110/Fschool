@@ -6,17 +6,9 @@ const PREFIX = "api/phuhuynh/"
 
 async function infoPhuhuyenh() {
   let id = Utils.getGlobal(nGlobalKeys.rowId, "")
-  let res = await Utils.get_apiToken(
-    PREFIX + `TaiKhoan/info?id=` + id,
-    false,
-    false
-  )
-  Utils.nlog('infoPhuhuyenh', res)
-  Utils.setGlobal(
-    nGlobalKeys.informationAccount,
-    res.data
-  )
+  let res = await Utils.get_apiToken(PREFIX + `TaiKhoan/info?id=` + id,false,false)
   if (res.success == true) {
+    Utils.setGlobal(nGlobalKeys.informationAccount,res.data)
     if (res.data.HocSinh.length > 0) {
       Utils.setGlobal(nGlobalKeys.IDKHDPS, res.data.HocSinh[0].IDKHDPS) //Tạm thời chống chế để có đc KHDSPS
     }
@@ -30,7 +22,7 @@ async function updateinfo(Fullname, Email, gender = false) {
     "RowId": id,
     "Fullname": Fullname,
     "Email": Email,
-    "gender": gender,
+    // "gender": gender,
   }
   let strBody = JSON.stringify(body);
   Utils.nlog(PREFIX + "updateinfo", strBody)
@@ -45,9 +37,6 @@ async function notifyParents(IDLoai) {
     false,
     false
   )
-  // Utils.nlog('TaiKhoan/info?id=')
-  // Utils.nlog(PREFIX + `TaiKhoan/info?id=` + id + '&IDLoai=' + IDLoai)
-  // Utils.nlog(res)
   return res
 }
 

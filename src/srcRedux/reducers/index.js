@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } 			from 'redux';
 import {
 	setListChild,
 	setListChilDattendance,
@@ -11,23 +11,22 @@ import {
 	setSumNotifyAllApp,
 	setListChildThongBaoAll,
 	setListChildThongBao,
-	setListChildThuMoiSuKien
-
-} from './setData';
+	setListChildThuMoiSuKien,
+	setFullname
+} 									from './setData';
 
 export default combineReducers({
-	listchild: setListChild,
-	listChilDattendance: setListChilDattendance,
-	avatar: setAvatar,
-	sumNotifyThongBao: setSumNotifyThongBao,
-	sumNotifyThuMoiSuKien: setSumNotifyThuMoiSuKien,
-	sumNotifyBaoBai: setSumNotifyBaoBai,
-	listChildBaoBai: setListChildBaoBai,
-	listChildChat: setListChildChat,
-
-	sumNotifiAllApp: setSumNotifyAllApp, // Đếm số thông báo all app
-	listChildThongBaoAll: setListChildThongBaoAll,
-	listChildThongBao: setListChildThongBao,
-	listChildThuMoiSuKien: setListChildThuMoiSuKien
-
+	listchild: 						setListChild,
+	listChilDattendance: 			setListChilDattendance,
+	avatar: 						setAvatar,
+	sumNotifyThongBao: 				setSumNotifyThongBao,
+	sumNotifyThuMoiSuKien: 			setSumNotifyThuMoiSuKien,
+	sumNotifyBaoBai: 				setSumNotifyBaoBai,
+	listChildBaoBai: 				setListChildBaoBai,
+	listChildChat: 					setListChildChat,
+	sumNotifiAllApp: 				setSumNotifyAllApp, 
+	listChildThongBaoAll: 			setListChildThongBaoAll,
+	listChildThongBao: 				setListChildThongBao,
+	listChildThuMoiSuKien: 			setListChildThuMoiSuKien,
+	fullname: 						setFullname
 });

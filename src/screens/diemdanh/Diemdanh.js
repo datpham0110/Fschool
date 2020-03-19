@@ -19,8 +19,8 @@ class Diemdanh extends Component {
         tempDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate());
         this.state = {
             allData: [],
-            tenHocSinh: Utils.getGlobal(nGlobalKeys.tenKH, null),
-            IDHocSinh: Utils.getGlobal(nGlobalKeys.IdHocSinh, ''),
+            // tenHocSinh: Utils.getGlobal(nGlobalKeys.tenKH, null),
+            // IDHocSinh: Utils.getGlobal(nGlobalKeys.IdHocSinh, ''),
             childSelected: Utils.getGlobal(nGlobalKeys.childSelected, undefined),
             flagNextDate: false,
             hocSinhData: '',
@@ -120,7 +120,7 @@ class Diemdanh extends Component {
                 {this.props.listchild.length > 0 ?
                     <View style={nstyles.nbody}>
                         <View style={{ flexDirection: 'row', backgroundColor: '#31cde5', marginHorizontal: 21, marginTop: 20, marginBottom: 10, borderRadius: 4 }}>
-                            <TouchableOpacity
+                            <View
                                 style={[nstyles.nrow, { alignItems: "center", marginHorizontal: 10, justifyContent: 'center', flex: 1 }]}
                                 onPress={() => Utils.goscreen(this, "Model_SelectHocSinh", { childSelected: this.state.childSelected, _renderdata: this._renderdata })}>
                                 <View>
@@ -135,8 +135,8 @@ class Diemdanh extends Component {
                                         {this.state.hocSinhData.LopHoc}
                                     </Text>
                                 </View>
-                                <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.whitegay, marginLeft: 15, top: -10 }]} />
-                            </TouchableOpacity>
+                                {/* <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.whitegay, marginLeft: 15, top: -10 }]} /> */}
+                            </View>
                         </View>
                         <View style={{ backgroundColor: 'white', padding: 20, marginHorizontal: 21, marginBottom: 10 }}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>

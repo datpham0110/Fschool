@@ -19,7 +19,8 @@ import {
 	SET_SUM_NOTIFY_ALL_APP, // Notify bell all app
 	SET_LIST_CHILD_THONGBAO_ALL,
 	SET_LIST_CHILD_THONGBAO, 
-	SET_LIST_CHILD_THUMOISUKIEN
+	SET_LIST_CHILD_THUMOISUKIEN,
+	SET_FULLNAME
 } from './type';
 
 export const setCountry = (val) => ({ type: SETCOUNTRY, data: val });
@@ -31,11 +32,8 @@ export const setItemFlightAvail = (val) => ({ type: SET_ITEM_FLIGHT_AVAIL, data:
 export const setFlightHolderContact = (val) => ({ type: SET_FLIGHT_HOLDER_CONTACT, data: val });
 export const setFlightPax = (val) => ({ type: SET_FLIGHT_PAX, data: val });
 export const setValueFilterFlight = (val) => ({ type: SET_VALUE_FILTER_FLIGHT, data: val });
-
 export const setListChild = (val) => ({ type: SET_LIST_CHILD, data: val });
 export const setAvatar = (val) => ({ type: SET_AVATAR, data: val });
-
-
 export const setSumNotifyThongBao = (val) => ({ type: SET_SUM_NOTIFY_THONGBAO, data: val });
 export const setSumNotifyThuMoiSuKien = (val) => ({ type: SET_SUM_NOTIFY_THUMOISUKIEN, data: val });
 export const setSumNotifyBaoBai = (val) => ({ type: SET_SUM_NOTIFY_BAOBAI, data: val });
@@ -45,4 +43,5 @@ export const setListChildChat = (val) => ({ type: SET_LIST_CHILD_CHAT, data: val
 export const setListChildThongBaoAll = (val) => ({ type: SET_LIST_CHILD_THONGBAO_ALL, data: val });
 export const setListChildThongBao = (val) => ({ type: SET_LIST_CHILD_THONGBAO, data: val });
 export const setListChildThuMoiSuKien = (val) => ({ type: SET_LIST_CHILD_THUMOISUKIEN, data: val });
+export const setFullname = (val) => ({ type: SET_FULLNAME, data: val });
 

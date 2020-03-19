@@ -59,7 +59,7 @@ class ListChillThuMoiSuKien extends Component {
                     titleText={'Danh sách học sinh'}
                 />
                 <ScrollView>
-                    {this.props.listChildThuMoiSuKien.length == 0 ? <Text style={{ textAlign: 'center', marginTop: 20 }}>Tài khoản chưa liên kết với học sinh </Text> : null}
+                    {this.props.listChildThuMoiSuKien.length == 0 ? <Text style={styles.styTitle}>Tài khoản chưa liên kết với học sinh </Text> : null}
                     <FlatList
                         renderItem={this._renderItemChild}
                         data={this.props.listChildThuMoiSuKien}
@@ -80,6 +80,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 20
+    },
+    styTitle: {
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: sizes.fs(18),
+        fontWeight: '800', 
+        color: colors.colorVeryLightPinkTwo
     },
 })
 const mapStateToProps = state => ({

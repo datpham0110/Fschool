@@ -14,7 +14,7 @@ export const nGlobalKeys = {
   TenKH: "TenKH",
   GioiTinh: "GioiTinh",
   rowId: "rowId",
-  IDLopHoc: "IDLopHoc",
+  // IDLopHoc: "IDLopHoc",
   IDKHDPS: "IDKHDPS",
   IDChiNhanh: "IDChiNhanh",
   IdCN: "IdCN",
@@ -23,7 +23,7 @@ export const nGlobalKeys = {
   IdUser: "IdUser",
   OTPTimeApp: "OTPTimeApp",
   Email: "Email",
-  IdKhachHang_User: "IdKhachHang_User",
+  // IdKhachHang_User: "IdKhachHang_User",
   // Object studen when Enter Studen
   ObjectHocSinh: "ObjectHocSinh",
   
@@ -32,8 +32,8 @@ export const nGlobalKeys = {
   TenKhachHang: "TenKhachHang",
   NgaySinh: "NgaySinh",
 
-  IdHocSinh: "IdHocSinh",
-  IDChiNhanhHocSinh: "IDChiNhanhHocSinh",
+  // IdHocSinh: "IdHocSinh",
+  // IDChiNhanhHocSinh: "IDChiNhanhHocSinh",
   ThongTinPhuHuynh: "ThongTinPhuHuynh",
   notification: "notification",
   ipPublic: "ipPublic",

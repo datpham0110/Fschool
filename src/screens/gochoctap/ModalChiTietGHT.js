@@ -8,7 +8,6 @@ import { Images } from "../../images/index"
 import ButtonCom from "../../components/Button/ButtonCom"
 import { sizes } from "../../styles"
 import { appConfig } from "../../app/Config"
-import ListEmpty from "../../components/ListEmpty"
 import { GocHocTapDetail } from "../../apis/gochoctap"
 const { width, height } = Dimensions.get("window")
 
@@ -26,9 +25,7 @@ export default class ModalChiTietGHT extends Component {
         this.Post_GocHocTapDetail();
     }
     Post_GocHocTapDetail = async () => {
-        Utils.nlog('---------------', this.dataChiTiet)
         let res = await GocHocTapDetail(this.dataChiTiet.IDRow)
-        Utils.nlog('res ------', res)
         if (res.success == 1) {
             data = res.data
             dataImage = res.data.ChiTiet
@@ -52,8 +49,6 @@ export default class ModalChiTietGHT extends Component {
             const item = dataImage[index];
             const obj = {
                 url: appConfig.domainImg + item.LinkHinh,
-                // width: arrImage.width,
-                // height: arrImage.height
             };
             imagesURL.push(obj);
         };
@@ -71,26 +66,19 @@ export default class ModalChiTietGHT extends Component {
                 <View style={[nstyles.nbody, { backgroundColor: colors.whitegay, marginHorizontal: 20 }]}>
                     <View style={{ backgroundColor: 'white', marginTop: 20, marginBottom: 12, paddingHorizontal: 20, paddingTop: 15, paddingBottom: 20 }}>
                         <Text style={{ color: '#29a9e0', fontWeight: 'bold' }}>Kết quả học tập trong ngày</Text>
-                        {/* <View style={{ backgroundColor: '#b8b8b8', height: 1, marginVertical: 13 }} /> */}
                         <View style={{ padding: 15, borderRadius: 6, borderWidth: 0.5, borderColor: '#b8b8b8' }}>
                             <Text style={{ fontSize: sizes.reSize(12) }}>{this.dataChiTiet.KetQuaHocTap}</Text>
                         </View>
-                        {/* <View style={{ borderRadius: 6, borderWidth: 0.5, borderColor: '#b8b8b8', padding: 15, height: '90%' }}> */}
                         <FlatList
-                            // ListEmptyComponent={<ListEmpty textempty={'Không có nội dung hình ảnh đi kèm'} />}
                             data={dataImage}
                             renderItem={this.renderItem}
                             numColumns={3}
                             showsVerticalScrollIndicator={false}
                             extraData={this.state} />
-                        {/* </View> */}
-
                     </View>
                     <View style={{ backgroundColor: 'white', marginBottom: 12, paddingHorizontal: 20, paddingTop: 15, paddingBottom: 20, height: '73%' }}>
                         <Text style={{ color: '#29a9e0', fontWeight: 'bold' }}>Ghi chú</Text>
                         <Text style={{ fontSize: sizes.reSize(12) }}>{data.GhiChu}</Text>
-                        {/* <View style={{ backgroundColor: '#b8b8b8', height: 1, marginVertical: 13 }} /> */}
-
                     </View>
                 </View>
                 <ButtonCom
@@ -98,7 +86,7 @@ export default class ModalChiTietGHT extends Component {
                     onPress={this.goBack}
                     text={"Quay lại"}
                 />
-            </View >
+            </View>
         )
     }
 }

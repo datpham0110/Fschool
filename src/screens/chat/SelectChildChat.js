@@ -6,7 +6,6 @@ import {
     TouchableOpacity,
     StyleSheet,
     Dimensions,
-    ListEmpty
 } from "react-native"
 import { nstyles } from '../../styles/styles';
 import HeaderCom from '../../components/HeaderCom';
@@ -58,8 +57,8 @@ class SelectChildChat extends Component {
                     borderRadius: 10
                 }} >
                 <View style={{ flexDirection: "column", marginLeft: 10, justifyContent: "center", flex: 1 }}>
-                    < Text style={{ color: "white", fontSize: sizes.sizes.nImgSize18, fontWeight: '700' }}> {item.TenHocSinh}</Text>
-                    < Text style={{ color: "white", fontSize: sizes.sizes.nImgSize16, fontWeight: '600', marginTop: 5 }}>{item.TenLop}</Text>
+                    <Text style={{ color: "white", fontSize: sizes.sizes.nImgSize18, fontWeight: '700' }}> {item.TenHocSinh}</Text>
+                    <Text style={{ color: "white", fontSize: sizes.sizes.nImgSize16, fontWeight: '600', marginTop: 5 }}>{item.TenLop}</Text>
                 </View>
                 {item.IsRead > 0 ?
                     <View style={styles.vIconNotifyBig}>
@@ -80,9 +79,11 @@ class SelectChildChat extends Component {
                     titleText={'Danh sách học sinh'}
                 />
                 <View style={nstyles.nbody}>
-                    {this.props.listChildChat.length == 0 ? <Text style={{ textAlign: 'center', marginTop: 20 }}>Tài khoản chưa liên kết với học sinh </Text> : null}
+                    {this.props.listChildChat.length == 0 ? 
+                    <Text style={styles.styTitle}>Tài khoản chưa liên kết với học sinh </Text> : 
+                    null
+                    }
                     <FlatList
-                        // ListEmptyComponent={<ListEmpty textempty={'Không có dữ liệu'} />}
                         refreshing={this.state.refreshing}
                         onRefresh={this._reloadData}
                         renderItem={this._renderItemChild}
@@ -103,6 +104,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 20
+    },
+    styTitle: {
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: sizes.fs(18),
+        fontWeight: '800', 
+        color: colors.colorVeryLightPinkTwo
     },
 })
 const mapStateToProps = state => ({

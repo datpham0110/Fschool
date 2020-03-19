@@ -7,14 +7,12 @@ import {
 	SET_SUM_NOTIFY_BAOBAI,
 	SET_LIST_CHILD_BAOBAI,
 	SET_LIST_CHILD_CHAT,
-	SET_SUM_NOTIFY_ALL_APP,  // Notify bell all app
+	SET_SUM_NOTIFY_ALL_APP,  
 	SET_LIST_CHILD_THONGBAO_ALL,
 	SET_LIST_CHILD_THONGBAO,
-	SET_LIST_CHILD_THUMOISUKIEN
-} from '../actions/type';
-
-const initialState = {};
-
+	SET_LIST_CHILD_THUMOISUKIEN,
+	SET_FULLNAME
+} 											from '../actions/type';
 
 function setListChildChat(state = [], action) {
 	switch (action.type) {
@@ -25,7 +23,6 @@ function setListChildChat(state = [], action) {
 	}
 }
 
-
 function setListChild(state = [], action) {
 	switch (action.type) {
 		case SET_LIST_CHILD:
@@ -35,7 +32,6 @@ function setListChild(state = [], action) {
 	}
 }
 
-
 function setListChilDattendance(state = [], action) {
 	switch (action.type) {
 		case SET_LIST_ATTENDANCE:
@@ -44,6 +40,7 @@ function setListChilDattendance(state = [], action) {
 			return state;
 	}
 }
+
 function setAvatar(state = [], action) {
 	switch (action.type) {
 		case SET_AVATAR:
@@ -52,7 +49,6 @@ function setAvatar(state = [], action) {
 			return state;
 	}
 }
-
 
 function setSumNotifyThongBao(state = [], action) {
 	switch (action.type) {
@@ -81,7 +77,6 @@ function setSumNotifyBaoBai(state = [], action) {
 	}
 }
 
-
 function setListChildBaoBai(state = [], action) {
 	switch (action.type) {
 		case SET_LIST_CHILD_BAOBAI:
@@ -90,7 +85,6 @@ function setListChildBaoBai(state = [], action) {
 			return state;
 	}
 }
-
 
 function setSumNotifyAllApp(state = [], action) {
 	switch (action.type) {
@@ -128,6 +122,14 @@ function setListChildThuMoiSuKien(state = [], action) {
 	}
 }
 
+function setFullname(state = [], action) {
+	switch (action.type) {
+		case SET_FULLNAME:
+			return action.data;
+		default:
+			return state;
+	}
+}
 
 export {
 	setListChild,
@@ -141,5 +143,6 @@ export {
 	setSumNotifyAllApp,
 	setListChildThongBaoAll,
 	setListChildThongBao,
-	setListChildThuMoiSuKien
+	setListChildThuMoiSuKien,
+	setFullname
 };

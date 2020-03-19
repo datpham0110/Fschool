@@ -2,8 +2,8 @@ export const appConfig = {
   defaultLang: "vi",
   defaultLangName: "Việt Nam",
   appToken: "",
-  version: "1.0.7-Test",
-  versionApp: 99,
+  version: "1.0.9",
+  versionApp: 9,
 
   linkIOSStore: 'https://apps.apple.com/us/app/yschool/id1486322665?ls=1',
   linkAndroidStore: 'https://play.google.com/store/apps/details?id=com.yschool.app',
@@ -22,6 +22,6 @@ export const appConfig = {
   domain: "http://apiys.yschool.vn/", //GoLive
   domainImg: "http://apibyc.yschool.vn", //GoLive
   domainVideo: "http://apiys.yschool.vn/", //GoLive
-  domainImgavatar: "http://apiys.yschool.vn/", // Test không dùng
+  domainImgavatar: "http://apiys.yschool.vn/", // GoLive
 
 };

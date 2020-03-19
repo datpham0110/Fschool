@@ -1,14 +1,25 @@
-import React, { Component } from "react"
-import { View, Text, FlatList, TouchableOpacity, ScrollView, Image, ActivityIndicator } from "react-native"
-import { Dimensions } from "react-native"
-import { colors, sizes } from "../../styles"
-import Utils from "../../app/Utils"
-import { nGlobalKeys } from "../../app/keys/globalKey"
-import { notification } from "../../apis/notifycation"
-import ButtonCom from "../../components/Button/ButtonCom"
-import { nstyles } from "../../styles/styles"
-import { Images } from "../../images"
+import React, { Component }      from "react"
+import { 
+  View, 
+  Text, 
+  FlatList, 
+  TouchableOpacity, 
+  ScrollView, 
+  Image, 
+  ActivityIndicator,
+  StyleSheet
+}                               from "react-native"
+import { Dimensions }           from "react-native"
+import { colors, sizes }        from "../../styles"
+import { fs }                   from "../../styles/size"
+import { nGlobalKeys }          from "../../app/keys/globalKey"
+import { notification }         from "../../apis/notifycation"
+import { nstyles }              from "../../styles/styles"
+import { Images }               from "../../images"
+import Utils                    from "../../app/Utils"
+import ButtonCom                from "../../components/Button/ButtonCom"
 const { width, height } = Dimensions.get("window")
+
 class NotifyHocPhi extends Component {
   list = []
   constructor(props) {
@@ -19,7 +30,9 @@ class NotifyHocPhi extends Component {
       msHocSInh: "",
       childSelected: '',
       flagLoad: false,
-      hocsinh: Utils.getGlobal(nGlobalKeys.childSelected, ''),
+      // hocsinh: Utils.getGlobal(nGlobalKeys.childSelected, ''),
+      hocsinh : Utils.ngetParam(nthis, 'hocsinh', ''),
+
     };
     this.isNotify = Utils.ngetParam(nthis, 'isNotify', false);
     this.dataNotify = Utils.ngetParam(nthis, 'dataNotify', '');
@@ -37,9 +50,9 @@ class NotifyHocPhi extends Component {
       }
     } else {
       if (this.listChild.length > 0) {
-        this.setState({ hocsinh: this.listChild[0] });
-        this.loadData(this.listChild[0]);
-        Utils.setGlobal(nGlobalKeys.childSelected, this.listChild[0]);
+        this.setState({ hocsinh: this.state.hocsinh });
+        this.loadData(this.state.hocsinh);
+        Utils.setGlobal(nGlobalKeys.childSelected, this.state.hocsinh);
       } else {
         Utils.setGlobal(nGlobalKeys.childSelected, null);
       }
@@ -101,23 +114,23 @@ class NotifyHocPhi extends Component {
   }
   render() {
     return (
-      <View style={{ backgroundColor: colors.BackgroundHome, flex: 1 }}>
-        <View style={{ backgroundColor: colors.BackgroundHome, flex: 1 }}>
-          <ScrollView style={{ backgroundColor: colors.BackgroundHome, flex: 1 }} >
-            <View style={{ width: width, alignItems: 'center', backgroundColor: 'white' }}>
+        <View style={nstyles.nbodyBGHome}>
+          <ScrollView
+          showsVerticalScrollIndicator={false}
+          >
+            <View style={{ width: '100%', alignItems: 'center', backgroundColor: 'white' }}>
               <Image resizeMode="contain" source={Images.logoSSC} style={{ width: width * 0.3, height: width * 0.15 }}></Image>
             </View>
-            {this.props.listchild.length == 0 ? <Text style={{ textAlign: 'center', marginTop: 20 }}>Tài khoản chưa liên kết với học sinh</Text> :
-              <TouchableOpacity
-                style={[nstyles.nrow, { alignItems: "center", marginHorizontal: 25, marginTop: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', borderRadius: 4 }]}
-                onPress={() => Utils.goscreen(nthis, "Model_SelectHocSinh", { childSelected: this.state.hocsinh, _renderdata: this._renderdata })} >
-                <View>
-                  <Text style={{ textAlign: "center", paddingTop: 20, fontSize: sizes.sizes.sText14 }} > Chi tiết học phí của </Text>
-                  <Text style={{ textAlign: "center", paddingVertical: 7, fontSize: sizes.sizes.sText18, fontWeight: "bold" }} > {this.state.hocsinh.TenKhachHang} </Text>
-                </View>
-                <View style={{ width: 10 }} />
-                <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.black_20 }]} />
-              </TouchableOpacity>}
+            {this.props.listchild.length == 0 ? 
+              <Text style={stylesTuition.styTitle}>Tài khoản chưa liên kết với học sinh</Text> :
+              <View
+                style={[nstyles.nrow, stylesTuition.viewNameStudent]}>
+                  <Text style={stylesTuition.titText}> Chi tiết học phí của </Text>
+                  <Text style={stylesTuition.titName}>{this.state.hocsinh.TenKhachHang}</Text>
+              </View>
+            }
+
+
             {this.state.flagLoad == true ?
               <ActivityIndicator style={{ marginTop: 30 }}>
               </ActivityIndicator> :
@@ -125,21 +138,11 @@ class NotifyHocPhi extends Component {
                 <View>
                   {this.state.data.length == 0 ? <Text style={{ textAlign: 'center', marginTop: 20 }}>Không có thông tin học phí để hiển thị</Text> :
                     <View>
-                      <View style={{ backgroundColor: colors.white, marginVertical: 15, marginHorizontal: 25, paddingHorizontal: 15, borderRadius: 4 }}  >
+                      <View style={{ backgroundColor: colors.white,  marginHorizontal: 25, paddingHorizontal: 15, borderRadius: 4 }}  >
                         <View style={{ flexDirection: "row", marginVertical: 10 }}>
                           <Text style={{ fontSize: sizes.sizes.sText18, color: colors.orange, flex: 1 }}>Tổng tiền phải nộp</Text>
                           <Text style={{ fontSize: sizes.sizes.sText18, color: colors.orange }}>{Utils.formatMoney(this.state.tongtien)} đ</Text>
                         </View>
-                        {/* <View style={{ height: 1, backgroundColor: colors.brownishGreyTwo, opacity: 0.3 }} />
-                        <View style={{ flexDirection: "row", marginVertical: 10 }}>
-                          <Text style={{ fontSize: sizes.sizes.sText14, flex: 1 }}>Đã thanh toán</Text>
-                          <Text style={{ fontSize: sizes.sizes.sText18 }}>0 đ</Text>
-                        </View>
-                        <View style={{ height: 1, backgroundColor: colors.brownishGreyTwo, opacity: 0.3 }} />
-                        <View style={{ flexDirection: "row", marginVertical: 10 }}>
-                          <Text style={{ fontSize: sizes.sizes.sText14, flex: 1, fontWeight: "bold" }}>  Còn lại  </Text>
-                          <Text style={{ fontSize: sizes.sizes.sText18, color: colors.orange }}>{Utils.formatMoney(this.state.tongtien)} đ</Text>
-                        </View> */}
                       </View>
                       <View style={{ backgroundColor: colors.white, marginHorizontal: 25, borderTopRightRadius: 4, borderTopLeftRadius: 4, flex: 1, marginBottom: 10 }}>
                         <Text style={{ fontSize: sizes.sizes.sText15, fontWeight: "500", padding: 15, color: "#0099FF" }}>Chi tiết các tiền phải nộp trong tháng</Text>
@@ -160,10 +163,41 @@ class NotifyHocPhi extends Component {
               : null
           }
         </View>
-      </View>
+      // </View>
     )
   }
 }
+
+const stylesTuition = StyleSheet.create({
+  styTitle: {
+      textAlign: 'center',
+      marginTop: 20,
+      fontSize: fs(18),
+      fontWeight: '800', 
+      color: colors.colorVeryLightPinkTwo
+  },
+  viewNameStudent: {
+    flexDirection: 'column', 
+    alignItems: "center", 
+    marginHorizontal: 25, 
+    marginVertical: 10, 
+    paddingVertical: 10,
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: 'white', 
+    borderRadius: 4
+  },
+  titName: {
+    textAlign: "center", 
+    paddingVertical: 5, 
+    fontSize: fs(18), 
+    fontWeight: "bold"
+  },
+  titText: {
+    textAlign: "center", 
+    fontSize: fs(16)
+  }
+})
 const mapStateToProps = state => ({
   listchild: state.listchild
 })

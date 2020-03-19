@@ -29,6 +29,14 @@ async function hocSinh_CreateOrders(MaHocSinh, sotien) {
     false,
     false
   )
+        console.log(PREFIX +
+          `HocSinh_CreateOrders?MaHocSinh=` +
+          MaHocSinh +
+          "&sotien=" +
+          sotien +
+          "&pClientIP="
+          + ipppppp);
+
   return res
 }
 

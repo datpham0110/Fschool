@@ -134,6 +134,10 @@ export const nstyles = StyleSheet.create({
   nbody: {
     flex: 1
   },
+  nbodyBGHome: {
+    backgroundColor: colors.BackgroundHome,
+    flex: 1
+  },
   nfooter: {
     height: heightBot,
     paddingBottom: paddingBotX

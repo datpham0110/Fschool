@@ -43,7 +43,8 @@ class KhaosatHome extends Component {
         this.listChild = props.listchild;
         this.codeClassList = [];
         this.IDHocSinh = Utils.ngetParam(this, 'IDHocSinh', null);
-        this.flagNotify = Utils.ngetParam(this, 'flagNotify', false)
+        this.flagNotify = Utils.ngetParam(this, 'flagNotify', false);
+        this.student = Utils.ngetParam(this, 'student', '')
     }
     componentDidMount() {
         Utils.setGlobal(nGlobalKeys.screenChatDetailSelected, 'KhaoSat')
@@ -53,9 +54,35 @@ class KhaosatHome extends Component {
         Utils.setGlobal(nGlobalKeys.screenChatDetailSelected, '')
     }
     CheckList = async () => {
-        if (this.props.listchild.length > 0) {
+        // if (this.props.listchild.length > 0) {
+        //     if (this.flagNotify == false) {
+        //         if (this.IDHocSinh != null) {
+        //             for (let i = 0; i < this.props.listchild.length; i++) {
+        //                 if (this.IDHocSinh == this.props.listchild[i].IDKhachHang) {
+        //                     this.setState({ hocSinhData: this.props.listchild[i] })
+        //                     Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[i]);
+        //                     this._loadListAction(this.props.listchild[i])
+        //                     break;
+        //                 }
+        //             }
+        //         } else {
+        //             this.setState({ hocSinhData: this.props.listchild[0] })
+        //             Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
+        //             this._loadListAction(this.props.listchild[0])
+        //         }
+        //     } else {
+        //         this.setState({ hocSinhData: this.props.listchild[0] })
+        //         Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
+        //         this._loadListAction(this.props.listchild[0])
+        //     }
+        // } else {
+        //     Utils.showMsgBoxOK(this, 'Thông báo', 'Tài khoản chưa liên kết với học sinh', 'Đóng', () => { Utils.goback(this) })
+        // }
             if (this.flagNotify == false) {
-                if (this.IDHocSinh != null) {
+                    this.setState({ hocSinhData: this.student })
+                    Utils.setGlobal(nGlobalKeys.childSelected, this.student);
+                    this._loadListAction(this.student)
+            } else {
                     for (let i = 0; i < this.props.listchild.length; i++) {
                         if (this.IDHocSinh == this.props.listchild[i].IDKhachHang) {
                             this.setState({ hocSinhData: this.props.listchild[i] })
@@ -64,28 +91,15 @@ class KhaosatHome extends Component {
                             break;
                         }
                     }
-                } else {
-                    this.setState({ hocSinhData: this.props.listchild[0] })
-                    Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
-                    this._loadListAction(this.props.listchild[0])
-
-                }
-            } else {
-                this.setState({ hocSinhData: this.props.listchild[0] })
-                Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
-                this._loadListAction(this.props.listchild[0])
             }
-        } else {
-            Utils.showMsgBoxOK(this, 'Thông báo', 'Tài khoản chưa liên kết với học sinh', 'Đóng', () => { Utils.goback(this) })
-        }
+       
     }
     _onRefresh = () => {
         this.setState({ refreshing: true }, () => this._loadListAction(this.state.hocSinhData));
     }
     _loadListAction = async (item) => {
-        var { tinhtrangSelect, classSelected } = this.state
+        var { tinhtrangSelect } = this.state
         let res = await KhaoSat_List(this.more, this.pageNumber, this.pageSize, this.sortOrder, this.sortField, item.IDLopHoc, tinhtrangSelect)
-        Utils.nlog('------------', res)
         if (res.status == 1) {
             listAction = res.data
         } else {
@@ -101,7 +115,6 @@ class KhaosatHome extends Component {
         Utils.goscreen(this, 'sc_ChiTietKhaoSat', { actionDetail: item, reload: this.reload, tinhtrangSelect: tinhtrangSelect })
     }
     _renderItem = ({ item, index }) => {
-        Utils.nlog('-------------------- Khảo sát', item.NgayTao)
         return (
             <View>
                 <TouchableOpacity onPress={() => this.goChiTiet(item)}
@@ -120,6 +133,7 @@ class KhaosatHome extends Component {
             </View>
         )
     }
+
     render() {
         var { listAction, tinhtrangSelect } = this.state
         console.log('tinhtrangSelect', tinhtrangSelect)
@@ -131,9 +145,8 @@ class KhaosatHome extends Component {
                     titleText={'Khảo sát'} />
                 <View style={[nstyles.nbody, { backgroundColor: colors.whitegay, marginTop: 15, marginHorizontal: 20, borderRadius: 4 }]}>
                     <View style={[nstyles.nrow, { backgroundColor: 'white', paddingHorizontal: 20, paddingVertical: 10, marginBottom: 10, borderRadius: 4 }]}>
-                        <TouchableOpacity
-                            style={[nstyles.nrow, { alignItems: "center", marginHorizontal: 10, justifyContent: 'center', flex: 1 }]}
-                            onPress={() => Utils.goscreen(this, "Model_SelectHocSinh", { childSelected: this.state.childSelected, _renderdata: this._loadListAction })}>
+                        <View
+                            style={[nstyles.nrow, { alignItems: "center", marginHorizontal: 10, justifyContent: 'center', flex: 1 }]}>
                             <View>
                                 <Text style={{ fontSize: 15, paddingBottom: 5, fontWeight: "500", textAlign: 'center', color: 'black' }}>
                                     {this.state.hocSinhData.LopHoc}
@@ -144,11 +157,10 @@ class KhaosatHome extends Component {
                                     {this.state.hocSinhData.TenKhachHang}
                                 </Text>
                             </View>
-                            <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.black_20, marginLeft: 5, top: -10 }]} />
-                        </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={[nstyles.nrow, { backgroundColor: 'white', marginBottom: 10, paddingHorizontal: 20, paddingVertical: 15, alignItems: 'center' }]}>
-                        <View style={[nstyles.nrow, stHoctap.container]}>
+                        <View style={[nstyles.nrow, styles.container]}>
                             <View style={{ flex: 1, }}>
                                 {Platform.OS == 'ios' ?
                                     <View style={{ position: 'absolute', right: 5, top: 0, bottom: 0, justifyContent: 'center' }}>
@@ -183,11 +195,33 @@ class KhaosatHome extends Component {
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </View>
-            </View >
+            </View>
         );
     }
 }
-const stHoctap = StyleSheet.create({
+
+// const stHoctap = StyleSheet.create({
+//     container: {
+//         alignItems: 'center',
+//         justifyContent: 'space-between',
+//         backgroundColor: colors.whitegay,
+//         padding: 5,
+//         flex: 1, borderRadius: 4
+//     },
+//     stext: {
+//         fontSize: sizes.reText(13),
+//         fontWeight: '500'
+//     },
+//     containText: {
+//         backgroundColor: colors.whitegay,
+//         alignSelf: 'flex-start',
+//         padding: 5,
+//         borderRadius: 3,
+//         paddingHorizontal: 10
+//     }
+// })
+
+const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -195,19 +229,6 @@ const stHoctap = StyleSheet.create({
         padding: 5,
         flex: 1, borderRadius: 4
     },
-    stext: {
-        fontSize: sizes.reText(13),
-        fontWeight: '500'
-    },
-    containText: {
-        backgroundColor: colors.whitegay,
-        alignSelf: 'flex-start',
-        padding: 5,
-        borderRadius: 3,
-        paddingHorizontal: 10
-    }
-})
-const styles = StyleSheet.create({
     textNameStudent1: {
         marginTop: 15,
         color: colors.blackShadow,

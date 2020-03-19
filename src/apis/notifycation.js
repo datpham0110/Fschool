@@ -124,9 +124,9 @@ async function ThongBao_ListAll_App_V2(LoaiThongBao, pageNow, IDHocSinh = -1, ID
     true,
     true
   )
-  Utils.nlog(PREFIX2 + `ThongBao_ListAll_App_V2`);
-  Utils.nlog('--------------------------strBody-----------ThongBao_ListAll_App_V2', strBody);
-  Utils.nlog('---------------------------res', res);
+  // Utils.nlog(PREFIX2 + `ThongBao_ListAll_App_V2`);
+  // Utils.nlog('--------------------------strBody-----------ThongBao_ListAll_App_V2', strBody);
+  // Utils.nlog('---------------------------res', res);
   return res
 }
 

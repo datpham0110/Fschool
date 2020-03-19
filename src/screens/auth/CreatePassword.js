@@ -20,7 +20,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Video from "react-native-video";
 import { appConfig } from "../../app/Config";
 import { isIphoneX } from "react-native-iphone-x-helper"
-
 const { width, height } = Dimensions.get("window");
 export default class CreatePassword extends React.Component {
   constructor(props) {
@@ -46,12 +45,7 @@ export default class CreatePassword extends React.Component {
           );
         }
       } else {
-        Utils.showMsgBoxOK(
-          this,
-          "Thông báo",
-          "Mật khẩu và Xác nhận lại mật khẩu phải trùng nhau",
-          "Đóng"
-        );
+        Utils.showMsgBoxOK(this, "Thông báo", "Mật khẩu và Xác nhận lại mật khẩu phải trùng nhau", "Đóng");
       }
     } else {
       if (this.pass1.toString().trim().length == 0) {

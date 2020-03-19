@@ -45,12 +45,7 @@ export default class EnterTheInformation extends React.Component {
       }
     }
     if (this.hoTen.length < 1) {
-      Utils.showMsgBoxOK(
-        this,
-        "Thông báo",
-        "Họ tên không được để trống",
-        "Đóng"
-      )
+      Utils.showMsgBoxOK(this, "Thông báo","Họ tên không được để trống","Đóng")
       return
     }
     Utils.nsetStore(nkey.Fullname, this.hoTen.toString().trim())

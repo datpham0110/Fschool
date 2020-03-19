@@ -89,26 +89,26 @@ class EnterStudentInformation extends React.Component {
             this.props.setListChild(res2.data.HocSinh)
             let count = this.props.listchild.length
             if (count == 1) {
-              Utils.setGlobal(
-                nGlobalKeys.IdHocSinh,
-                this.props.listchild[0].MaKhachHang
-              )
-              Utils.setGlobal(
-                nGlobalKeys.tenKH,
-                this.props.listchild[0].TenKhachHang
-              )
-              Utils.setGlobal(
-                nGlobalKeys.GioiTinh,
-                this.props.listchild[0].GioiTinh
-              )
-              Utils.setGlobal(
-                nGlobalKeys.IDKhachHang,
-                this.props.listchild[0].IDKhachHang
-              )
-              Utils.setGlobal(
-                nGlobalKeys.IDChiNhanhHocSinh,
-                this.props.listchild[0].IDChiNhanh
-              )
+              // Utils.setGlobal(
+              //   nGlobalKeys.IdHocSinh,
+              //   this.props.listchild[0].MaKhachHang
+              // )
+              // Utils.setGlobal(
+              //   nGlobalKeys.tenKH,
+              //   this.props.listchild[0].TenKhachHang
+              // )
+              // Utils.setGlobal(
+              //   nGlobalKeys.GioiTinh,
+              //   this.props.listchild[0].GioiTinh
+              // )
+              // Utils.setGlobal(
+              //   nGlobalKeys.IDKhachHang,
+              //   this.props.listchild[0].IDKhachHang
+              // )
+              // Utils.setGlobal(
+              //   nGlobalKeys.IDChiNhanhHocSinh,
+              //   this.props.listchild[0].IDChiNhanh
+              // )
               Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
             }
           }

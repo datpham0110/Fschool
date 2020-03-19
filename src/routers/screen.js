@@ -1,95 +1,129 @@
+//------------------------------------------- React Native --------------------------------------------
 import {
   createStackNavigator,
-  createBottomTabNavigator,
   createSwitchNavigator,
   createDrawerNavigator
 } from "react-navigation"
 import { Easing, Animated } from "react-native"
-// -- Root Screen + Component native custom
+//------------------------------------------- Component -----------------------------------------------
 import MsgBox from "../components/MsgBox"
-import RootScreen from "../screens/RootScreen"
-// JeeKit
-import Login from "../screens/auth/Login"
-import Welcome from "../screens/welcome/Welcome"
-import ListTeacher from "../screens/chat/ListTeacher"
-import PichChild from "../screens/child/PichChild"
-import Chat from "../screens/chat/chat"
-import MenuRight from "../screens/welcome/MenuRight"
-import NotifyHocPhi from "../screens/hocphi/NotifyHocPhi"
-import HocPhi from "../screens/hocphi/HocPhi"
-import EnterYourPhoneNumber from "../screens/auth/EnterYourPhoneNumber"
-import AccuracyOTP from "../screens/auth/AccuracyOTP"
-import CreatePassword from "../screens/auth/CreatePassword"
-import EnterTheInformation from "../screens/auth/EnterTheInformation"
-import NotifyEnterPhoneNumber from "../screens/auth/NotifyEnterPhoneNumber"
-import EnterStudentInformation from "../screens/auth/EnterStudentInformation"
-import Setting from "../screens/welcome/Setting"
+import MediaPicker from '../components/MediaPicker';
+import TakeCamera from '../components/TakeCamera';
+import ViewImageListShow from '../components/ViewImageListShow';
+
+//------------------------------------------- Style ---------------------------------------------------
 import { nwidth } from "../styles/styles"
 import { isPad } from "../styles/size"
-import InfomationAccount from "../screens/welcome/InfomationAccount"
-import ThongBao from "../screens/welcome/ThongBao"
-import BaoBai from "../screens/welcome/BaoBai"
-import ChangePassword from "../screens/profile/changePassword"
+
+//------------------------------------------- Screen --------------------------------------------------
+//---- Góc hoạt động ----------------------------------------------------------------------------------
+import ListStudentBustle from '../screens/gochoatdong/ListStudentBustle';
+import GocHoatDongHome from "../screens/gochoatdong/GocHoatDongHome";
+import ChiTietGocHoatDong from '../screens/gochoatdong/ChiTietGocHoatDong';
+
+//---- Góc học tập ----------------------------------------------------------------------------------
+import ListStudentStudy from "../screens/gochoctap/ListStudentStudy";
+import StudySpace from '../screens/gochoctap/StudySpace';
+import ModalChiTietGHT from "../screens/gochoctap/ModalChiTietGHT";
+
+//---- Báo bài ----------------------------------------------------------------------------------------
+import ListChildBaoBai from '../screens/BaoBai/ListChildBaoBai';
+import ListBaoBai from '../screens/BaoBai/ListBaoBai';
+
+//---- Thông báo All ----------------------------------------------------------------------------------
+import ListChildThongBaoAll from '../screens/ThongBaoAll/ListChillThongBaoAll';
+import ThongBaoAll from '../screens/welcome/ThongBaoAll';
+
+//---- Thông báo --------------------------------------------------------------------------------------
+import ListChildThongBao from '../screens/thongbao/ListChillThongBao';
+
+//---- Thư mời sự kiện --------------------------------------------------------------------------------
+import ListChillThuMoiSuKien from '../screens/ThuMoiSuKien/ListChillThuMoiSuKien';
+import ThuMoiSuKien from '../screens/welcome/thuMoiSuKien';
+
+//---- Kết quả học tập --------------------------------------------------------------------------------
+import KetQuaHocTap from '../screens/welcome/ketQuaHocTap';
+
+//---- Điểm danh --------------------------------------------------------------------------------------
+import Diemdanh from "../screens/diemdanh/Diemdanh";
+import ListStudentAttendance from '../screens/diemdanh/ListStudentAttendance';
+
+//---- Học phí ----------------------------------------------------------------------------------------
+import HocPhi from "../screens/hocphi/HocPhi";
+import ListHocPhi from "../screens/thanhToanHocPhi/listHocPhi";
+import ListStudentTuition from '../screens/hocphi/ListStudentTuition';
+
+//---- Chat -------------------------------------------------------------------------------------------
+import SelectChildChat from '../screens/chat/SelectChildChat';
+import ListTeacher from "../screens/chat/ListTeacher";
+import Chat from "../screens/chat/chat";
+
+//---- Tiện ích khác ----------------------------------------------------------------------------------
+import TienichHome from "../screens/Tienich/TienichHome";
+import Thecao from "../screens/Tienich/TheCao/Thecao";
+import NapTienDienThoai from "../screens/Tienich/NapTienDienThoai";
+import HoaDonHome from "../screens/Tienich/HoaDon/HoaDonHome";
+import ChiTietGiaodich from "../screens/Tienich/ChiTietGiaodich";
+
+//---- Khảo sát ---------------------------------------------------------------------------------------
+import ListStudenSurvey from '../screens/khaosat/ListStudenSurvey';
+import KhaosatHome from "../screens/khaosat/KhaosatHome";
+import ChiTietKhaoSat from "../screens/khaosat/ChiTietKhaoSat";
+
+//---- DrawerNativatorRight ---------------------------------------------------------------------------
+import Setting from "../screens/welcome/Setting";
+
+//---- Authencation -----------------------------------------------------------------------------------
+import EnterYourPhoneNumber from "../screens/auth/EnterYourPhoneNumber";
+import AccuracyOTP from "../screens/auth/AccuracyOTP";
+import Login from "../screens/auth/Login";
+import NotifyEnterPhoneNumber from "../screens/auth/NotifyEnterPhoneNumber";
+import EnterStudentInformation from "../screens/auth/EnterStudentInformation";
+import CreatePassword from "../screens/auth/CreatePassword";
+
+//---- Thời khoá biểu  --------------------------------------------------------------------------------
+import ListStudenTimetable from "../screens/Timetable/ListStudenTimetable";
+import ThoiKhoaBieuHome from '../screens/Timetable/ThoiKhoaBieuHome';
+
+//---- AppStack ---------------------------------------------------------------------------------------
+
+//---- Modal ---------------------------------------------------------------------------------------
+import WorkBaiKiemTra from '../screens/thongbao/workBaiKiemTra';
+import PlayVideo from '../screens/videoYTB/playVideo';
+import ThoaThuanNguoiDung from '../screens/welcome/ThoaThuanNguoiDung';
+import ChonNhaMang from "../screens/Tienich/TheCao/ChonNhaMang";
+import ThanhToan from "../screens/Tienich/ThanhToan";
+import HotroHome from "../screens/Hotro247/HotroHome";
+import RootScreen from "../screens/RootScreen";
+import Welcome from "../screens/welcome/Welcome";
+import MenuRight from "../screens/welcome/MenuRight";
+import EnterTheInformation from "../screens/auth/EnterTheInformation";
+import InfomationAccount from "../screens/welcome/InfomationAccount";
+import ThongBao from "../screens/welcome/ThongBao";
+import ChangePassword from "../screens/profile/changePassword";
 import ChiTietHocPhi from "../screens/hocphi/ChiTietHocPhi"
 import ChiTietThongBao from "../screens/thongbao/chitietthongbao"
 import DropDownChiNhanh from "../screens/chiNhanh/dropdownChiNhanh"
-import Diemdanh from "../screens/diemdanh/Diemdanh"
 import ModelListHocSinh from "../screens/hocsinh/modeListHocSinh"
-import ListHocPhi from "../screens/thanhToanHocPhi/listHocPhi"
 import GiaoDichThanhCong from "../screens/thanhToanHocPhi/giaoDichThanhCong"
 import ThanhToanWebView from "../screens/thanhToanHocPhi/thanhtoanwebview"
 import EnterPassword from "../screens/thanhToanHocPhi/enterPasswork"
 import Upload from '../screens/profile/Upload';
 import SelectHocSinh from '../screens/hocsinh/selectHocSinh';
 import ShowImgBig from '../screens/thongbao/showImgBig';
-import ThongBaoAll from '../screens/welcome/ThongBaoAll';
-import ThuMoiSuKien from '../screens/welcome/thuMoiSuKien';
-import KetQuaHocTap from '../screens/welcome/ketQuaHocTap';
-// camera
 
-import MediaPicker from '../components/MediaPicker';
-import TakeCamera from '../components/TakeCamera';
-// import GochocTapp from "../screens/gochoctap/GochocTapp"
-import ModalChiTietGHT from "../screens/gochoctap/ModalChiTietGHT"
-import GocHoatDongHome from "../screens/gochoatdong/GocHoatDongHome"
 
-import ViewImageListShow from '../components/ViewImageListShow';
-import GochocTapp from '../screens/gochoctap/GochocTapp';
-import ChiTietGocHoatDong from '../screens/gochoatdong/ChiTietGocHoatDong';
-import KhaosatHome from "../screens/khaosat/KhaosatHome"
-import ChiTietKhaoSat from "../screens/khaosat/ChiTietKhaoSat"
-
-import ThoiKhoaBieuHome from '../screens/thoikhoaBieu/ThoiKhoaBieuHome';
-import TienichHome from "../screens/Tienich/TienichHome"
-import HotroHome from "../screens/Hotro247/HotroHome"
-import Thecao from "../screens/Tienich/TheCao/Thecao"
-import NapTienDienThoai from "../screens/Tienich/NapTienDienThoai"
-import HoaDonHome from "../screens/Tienich/HoaDon/HoaDonHome"
-import ChiTietGiaodich from "../screens/Tienich/ChiTietGiaodich"
-import ThanhToan from "../screens/Tienich/ThanhToan"
-import ChonNhaMang from "../screens/Tienich/TheCao/ChonNhaMang"
-
-import ListChildBaoBai from '../screens/BaoBai/ListChildBaoBai';
-import ListBaoBai from '../screens/BaoBai/ListBaoBai';
-//deepLink tripu123123://app/root/drawer/hotels/confirm/2
-import ThoaThuanNguoiDung from '../screens/welcome/ThoaThuanNguoiDung';
-import SelectChildChat from '../screens/chat/SelectChildChat';
-
-import PlayVideo from '../screens/videoYTB/playVideo';
-import WorkBaiKiemTra from '../screens/thongbao/workBaiKiemTra';
-
-import ListChildThongBaoAll from '../screens/ThongBaoAll/ListChillThongBaoAll';
-import ListChildThongBao from '../screens/thongbao/ListChillThongBao';
-import ListChillThuMoiSuKien from '../screens/ThuMoiSuKien/ListChillThuMoiSuKien';
-const sc_GocHoatDongStack = createStackNavigator(
+// Góc học tập stack
+const StudySpaceStack = createStackNavigator(
   {
-    sc_GocHoatDongHome: {
-      screen: GocHoatDongHome,
-      path: 'GocHoatDongHome'
+    sc_ListStudentStudy: {
+      screen: ListStudentStudy
     },
-    sc_ChiTietGocHoatDong: {
-      screen: ChiTietGocHoatDong,
-      path: 'ChiTietGocHoatDong'
+    sc_StudySpace: {
+      screen: StudySpace
+    },
+    Modal_ModalChiTietGHT: {
+      screen: ModalChiTietGHT
     }
   },
   {
@@ -101,16 +135,36 @@ const sc_GocHoatDongStack = createStackNavigator(
   }
 )
 
+// Góc hoạt động stack
+const sc_GocHoatDongStack = createStackNavigator(
+  {
+    sc_ListStudentBustle: {
+      screen: ListStudentBustle
+    },
+    sc_GocHoatDongHome: {
+      screen: GocHoatDongHome
+    },
+    sc_ChiTietGocHoatDong: {
+      screen: ChiTietGocHoatDong
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      gesturesEnabled: false,
+      header: null
+    }
+  }
+)
 
+// Báo bài stack
 const baoBaiStack = createStackNavigator(
   {
     sc_ListChildBaoBai: {
-      screen: ListChildBaoBai,
-      path: 'ListChildBaoBai'
+      screen: ListChildBaoBai
     },
     sc_ListBaoBai: {
-      screen: ListBaoBai,
-      path: 'ListBaoBai'
+      screen: ListBaoBai
     }
   },
   {
@@ -122,19 +176,15 @@ const baoBaiStack = createStackNavigator(
   }
 )
 
-
+// Thông báo all stack
 const thongBaoAllStack = createStackNavigator(
   {
     sc_ListChildThongBaoAll: {
-      screen: ListChildThongBaoAll,
-      path: 'ListChildThongBaoAll'
+      screen: ListChildThongBaoAll
     },
     sc_ThongBaoAll: {
-      screen: ThongBaoAll,
-      path: 'ThongBaoAll'
+      screen: ThongBaoAll
     }
-    // Modal_ThongBaoAll: ThongBaoAll,
-
   },
   {
     headerMode: "none",
@@ -144,16 +194,14 @@ const thongBaoAllStack = createStackNavigator(
     }
   }
 )
-
+// Thông báo stack
 const sc_ThongBaoStack = createStackNavigator(
   {
     sc_ListChildThongBao: {
-      screen: ListChildThongBao,
-      path: 'ListChildThongBao'
+      screen: ListChildThongBao
     },
     sc_ThongBao: {
-      screen: ThongBao,
-      path: 'ThongBao'
+      screen: ThongBao
     },
   },
   {
@@ -164,11 +212,14 @@ const sc_ThongBaoStack = createStackNavigator(
     }
   }
 )
-const sc_DiemDanhStack = createStackNavigator(
+// Điểm danh stack
+const attendance_Stack = createStackNavigator(
   {
+    sc_ListStudentAttendance: {
+      screen: ListStudentAttendance
+    },
     sc_Diemdanh: {
-      screen: Diemdanh,
-      path: 'DiemDanh'
+      screen: Diemdanh
     },
   },
   {
@@ -180,15 +231,75 @@ const sc_DiemDanhStack = createStackNavigator(
   }
 )
 
-const sc_HocPhiStack = createStackNavigator(
+// Khảo sát stack
+const survey_Stack = createStackNavigator(
   {
-    sc_HocPhi: {
-      screen: HocPhi,
-      path: 'HocPhi'
+    sc_ListStudenSurvey: {
+      screen: ListStudenSurvey
+    },
+    sc_KhaosatHome: {
+      screen: KhaosatHome
+    },
+    sc_ChiTietKhaoSat: {
+      screen: ChiTietKhaoSat
+    },
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      gesturesEnabled: false,
+      header: null
+    }
+  }
+)
+
+// Thời khoá hiểu stack
+const timetable_Stack = createStackNavigator(
+  {
+    sc_ListStudenTimetable: {
+      screen: ListStudenTimetable
+    },
+    sc_ThoiKhoaBieu: {
+      screen: ThoiKhoaBieuHome
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      gesturesEnabled: false,
+      header: null
+    }
+  }
+)
+const sc_HocPhiStackTwo = createStackNavigator(
+  {
+    sc_HocPhi_Two: {
+      screen: HocPhi
     },
     sc_ListHocPhi: {
-      screen: ListHocPhi,
-      path: 'ListHocPhi'
+      screen: ListHocPhi
+    },
+    sc_ThanhToanWebView: ThanhToanWebView,
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      gesturesEnabled: false,
+      header: null
+    }
+  }
+)
+// Học phí stack
+const sc_HocPhiStack = createStackNavigator(
+  {
+    sc_ListStudentTuition: {
+      screen: ListStudentTuition
+    },
+    sc_HocPhi: {
+      screen: HocPhi
+    },
+    sc_ListHocPhi: {
+      screen: ListHocPhi
     },
     sc_ThanhToanWebView: ThanhToanWebView,
   },
@@ -204,12 +315,10 @@ const sc_HocPhiStack = createStackNavigator(
 const sc_ChatStack = createStackNavigator(
   {
     sc_SelectChildChat: {
-      screen: SelectChildChat,
-      path: 'SelectChildChat'
+      screen: SelectChildChat
     },
     sc_listteacher: {
-      screen: ListTeacher,
-      path: 'ListTeacher'
+      screen: ListTeacher
     },
     sc_Chat: Chat,
   },
@@ -225,12 +334,10 @@ const sc_ChatStack = createStackNavigator(
 const sc_ThuMoiSuKienStack = createStackNavigator(
   {
     sc_ListChillThuMoiSuKien: {
-      screen: ListChillThuMoiSuKien,
-      path: 'ListChillThuMoiSuKien'
+      screen: ListChillThuMoiSuKien
     },
     sc_ThuMoiSuKien: {
-      screen: ThuMoiSuKien,
-      path: 'ThuMoiSuKien'
+      screen: ThuMoiSuKien
     }
   },
   {
@@ -261,24 +368,19 @@ const sc_KetQuaHocTapStack = createStackNavigator(
 const stack_TienichKhac = createStackNavigator(
   {
     sc_TienichKhac: {
-      screen: TienichHome,
-      path: 'TienichHome'
+      screen: TienichHome
     },
     sc_Thecao: {
-      screen: Thecao,
-      path: 'Thecao'
+      screen: Thecao
     },
     sc_NapTienDienThoai: {
-      screen: NapTienDienThoai,
-      path: 'NapTienDienThoai'
+      screen: NapTienDienThoai
     },
     sc_HoaDonHome: {
-      screen: HoaDonHome,
-      path: 'HoaDonHome'
+      screen: HoaDonHome
     },
     sc_ChiTietGiaodich: {
-      screen: ChiTietGiaodich,
-      path: 'sc_ChiTietGiaodich'
+      screen: ChiTietGiaodich
     }
 
   },
@@ -293,77 +395,61 @@ const stack_TienichKhac = createStackNavigator(
 
 const HomeStack = createStackNavigator(
   {
+    // ------------------------------------- Điểm danh
     sc_Home: Welcome,
-
     thongBaoAllStack: {
       screen: thongBaoAllStack,
       path: 'thongBaoAllStack'
     },
+    // ------------------------------------- Bái bài
     baoBaiStack: {
       screen: baoBaiStack,
-      path: 'baoBaiStack'
     },
-    // sc_BaoBai: {
-    //   screen: BaoBai
-    // },
-    //Stack
-    //--------Thông báo
+    // ------------------------------------- Thông báo
     sc_ThongBaoStack: {
       screen: sc_ThongBaoStack,
-      path: 'sc_ThongBaoStack'
     },
-    //---------Học phí
+    // ------------------------------------- Học phí
     sc_HocPhiStack: {
       screen: sc_HocPhiStack,
-      path: 'sc_HocPhiStack'
     },
-    //---------Điểm danh
-    // sc_DiemDanhStack: {
-    //   screen: sc_DiemDanhStack,
-    //   path: 'sc_DiemDanhStack'
-    // },
-    sc_Diemdanh: {
-      screen: Diemdanh,
-      path: 'DiemDanh'
+    sc_HocPhiStackTwo: {
+      screen: sc_HocPhiStackTwo
     },
-    //---------Góc học tập
-    // sc_GocHocTapStack: {
-    //   screen: sc_GocHocTapStack
-    // },
-    sc_GochocTapp: {
-      screen: GochocTapp
+    // ------------------------------------- Điểm danh
+    attendance_Stack: {
+      screen: attendance_Stack,
     },
-    //---------Góc hoạt động
+    // ------------------------------------- Góc hoạt động
     sc_GocHoatDongStack: {
       screen: sc_GocHoatDongStack,
-      path: 'sc_GocHoatDongStack'
     },
-    //----------Chat
+    // ------------------------------------- Chat
     sc_ChatStack: {
       screen: sc_ChatStack
     },
-    //----------Thư mời sự kiện
+    // ------------------------------------- Thư mời sự kiện
     sc_ThuMoiSuKienStack: {
       screen: sc_ThuMoiSuKienStack
     },
-    //----------Kết quả học tập
+    // ------------------------------------- Kết quả học tập
     sc_KetQuaHocTapStack: {
       screen: sc_KetQuaHocTapStack
     },
-    //----------Khảo soát
-    // sc_KhaoSatStack: {
-    //   screen: sc_KhaoSatStack
-    // },
-    sc_KhaosatHome: {
-      screen: KhaosatHome,
-      path: 'KhaosatHome'
+    // ------------------------------------- Khảo soát
+    sc_surveyStack: {
+      screen: survey_Stack
     },
-    sc_ChiTietKhaoSat: {
-      screen: ChiTietKhaoSat,
-      path: 'ChiTietKhaoSat'
+    // ------------------------------------- Góc học tập
+    sc_StudySpaceStack: {
+      screen: StudySpaceStack,
+      path: 'StudySpaceStack'
     },
-    sc_ThoiKhoaBieu: ThoiKhoaBieuHome,
-    //Modal
+    // ------------------------------------- Thời khoá biểu
+    // sc_ThoiKhoaBieu: ThoiKhoaBieuHome,
+    sc_timetable_Stack: {
+      screen: timetable_Stack
+    },
     sc_GiaoDichThanhCong: {
       screen: GiaoDichThanhCong,
       path: 'GiaoDichThanhCong'
@@ -373,8 +459,6 @@ const HomeStack = createStackNavigator(
       screen: HotroHome,
       path: 'HotroHome'
     }
-
-
   },
   {
     headerMode: "none",
@@ -477,8 +561,6 @@ const RootModalStack = createStackNavigator(
     Model_Upload: Upload,
     Model_SelectHocSinh: SelectHocSinh,
     Modal_ShowImgBig: ShowImgBig,
-    // Modal_ThongBaoAll: ThongBaoAll,
-    Modal_ModalChiTietGHT: ModalChiTietGHT,
     sc_ViewImageListShow: ViewImageListShow,
     Modal_HoTroKhachHang: HotroHome,
     sc_ThanhToan: ThanhToan,

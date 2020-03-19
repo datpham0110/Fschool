@@ -18,7 +18,6 @@ async function getListChiNhanhV2(tenchinhanh = '', pageNumber = 0, pageSize = 30
         "pageSize": pageSize,
         "sortOrder": "desc",
         "sortField": ""
-
     })
     Utils.nlog('------------------- getListChiNhanh', PREFIX1)
     Utils.nlog('------------------- getListChiNhanh body', strBody)

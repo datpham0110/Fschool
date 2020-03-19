@@ -56,10 +56,8 @@ class RootScreen extends Component {
     let password = await Utils.ngetStore(nkey.password, null)
     if (phonenumber != null && password != null) {
       const checkToken = await onCheckLogin(phonenumber, password)
-      Utils.nlog('---------- checkToken', checkToken)
       if (checkToken) {
         let res = await infoPhuhuyenh()
-        Utils.nlog('---------- infoPhuhuyenh', res)
         if (res.success == true) {
         }
         if (res) {

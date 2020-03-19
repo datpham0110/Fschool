@@ -38,29 +38,46 @@ class GocHoatDongHome extends Component {
         this.listChild = props.listchild;
         this.codeClassList = [];
         this.IDHocSinh = Utils.ngetParam(this, 'IDHocSinh')
-        this.flagNotify = Utils.ngetParam(this, 'flagNotify', false)
+        this.flagNotify = Utils.ngetParam(this, 'flagNotify', false);
+        this.studen = Utils.ngetParam(this, 'studen', '');
     }
     componentDidMount() {
-        if (this.listChild.length > 0) {
-            if (this.flagNotify == true) {
-                for (let i = 0; i < this.listChild.length; i++) {
-                    if (this.IDHocSinh == this.listChild[i].IDKhachHang) {
-                        this.setState({ hocSinhData: this.listChild[i] })
-                        Utils.setGlobal(nGlobalKeys.childSelected, this.listChild[i]);
-                        this._loadListActionNotify(this.listChild[i].IDLopHoc)
-                        break;
-                    }
+        if (this.flagNotify == true) {
+            for (let i = 0; i < this.listChild.length; i++) {
+                if (this.IDHocSinh == this.listChild[i].IDKhachHang) {
+                    this.setState({ hocSinhData: this.listChild[i] })
+                    Utils.setGlobal(nGlobalKeys.childSelected, this.listChild[i]);
+                    this._loadListActionNotify(this.listChild[i].IDLopHoc)
+                    break;
                 }
-            } else {
-                this.setState({ hocSinhData: this.props.listchild[0] })
-                Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
-
-                this._loadListAction(this.props.listchild[0])
             }
         } else {
-            Utils.showMsgBoxOK(this, 'Thông báo', 'Tài khoản chưa liên kết với học sinh', 'Đóng')
-            Utils.goback(this)
+            this.setState({ hocSinhData: this.studen })
+            Utils.setGlobal(nGlobalKeys.childSelected, this.studen);
+            this._loadListAction(this.studen)
         }
+
+
+        // if (this.listChild.length > 0) {
+        //     if (this.flagNotify == true) {
+        //         for (let i = 0; i < this.listChild.length; i++) {
+        //             if (this.IDHocSinh == this.listChild[i].IDKhachHang) {
+        //                 this.setState({ hocSinhData: this.listChild[i] })
+        //                 Utils.setGlobal(nGlobalKeys.childSelected, this.listChild[i]);
+        //                 this._loadListActionNotify(this.listChild[i].IDLopHoc)
+        //                 break;
+        //             }
+        //         }
+        //     } else {
+        //         this.setState({ hocSinhData: this.props.listchild[0] })
+        //         Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
+
+        //         this._loadListAction(this.props.listchild[0])
+        //     }
+        // } else {
+        //     Utils.showMsgBoxOK(this, 'Thông báo', 'Tài khoản chưa liên kết với học sinh', 'Đóng')
+        //     Utils.goback(this)
+        // }
     }
 
     _loadListActionNotify = async (IDHocSinh) => {
@@ -124,9 +141,10 @@ class GocHoatDongHome extends Component {
                 {this.listChild.length > 0 ?
                     <View style={[nstyles.nbody, { backgroundColor: colors.whitegay, marginTop: 15, marginHorizontal: 20, borderRadius: 4 }]}>
                         <View style={{ flexDirection: 'row', marginBottom: 10, paddingVertical: 15, backgroundColor: 'white', borderRadius: 4 }}>
-                            <TouchableOpacity
+                            <View
                                 style={[nstyles.nrow, { alignItems: "center", marginHorizontal: 10, justifyContent: 'center', flex: 1 }]}
-                                onPress={() => Utils.goscreen(this, "Model_SelectHocSinh", { childSelected: this.state.childSelected, _renderdata: this._loadListAction })}>
+                                // onPress={() => Utils.goscreen(this, "Model_SelectHocSinh", { childSelected: this.state.childSelected, _renderdata: this._loadListAction })}
+                                >
                                 <View>
                                     <Text style={{ fontSize: 15, paddingBottom: 5, fontWeight: "500", textAlign: 'center', color: 'black' }}>
                                         {this.state.hocSinhData.LopHoc}
@@ -137,8 +155,8 @@ class GocHoatDongHome extends Component {
                                         {this.state.hocSinhData.TenKhachHang}
                                     </Text>
                                 </View>
-                                <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.black_20, marginLeft: 5, top: -10 }]} />
-                            </TouchableOpacity>
+                                {/* <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.black_20, marginLeft: 5, top: -10 }]} /> */}
+                            </View>
                         </View>
                         <FlatList
                             ListEmptyComponent={<ListEmpty textempty={'Không có dữ liệu'} />}

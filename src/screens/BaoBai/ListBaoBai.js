@@ -4,6 +4,8 @@ import { Dimensions } from 'react-native';
 import { colors, sizes } from '../../styles';
 import Utils from '../../app/Utils';
 import { nstyles } from '../../styles/styles';
+import { fs } from '../../styles/size';
+
 import { nGlobalKeys } from '../../app/keys/globalKey';
 import HeaderCom from '../../components/HeaderCom';
 import { Images } from '../../images';
@@ -103,35 +105,31 @@ class ListBaoBai extends Component {
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}
                         colors={['#f8b199', '#f27972']}
-                        style={{
-                            backgroundColor: colors.nocolor
-                        }}>
-                        <Text style={{ textAlign: 'center', marginVertical: 14, marginLeft: 10, color: 'white', fontWeight: '700' }}>Ngày {item.NgayGui}</Text>
+                        style={{ backgroundColor: colors.nocolor }}>
+                        <Text style={stListBaoBai.styTitDat}>Ngày {item.NgayGui}</Text>
                     </LinearGradient>
                     : null :
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}
                         colors={['#f8b199', '#f27972']}
-                        style={{
-                            backgroundColor: colors.nocolor
-                        }}>
-                        <Text style={{ textAlign: 'center', marginVertical: 14, marginLeft: 10, color: 'white', fontWeight: '700' }}>Ngày {item.NgayGui}</Text>
+                        style={{ backgroundColor: colors.nocolor  }}>
+                        <Text style={stListBaoBai.styTitDat}>Ngày {item.NgayGui}</Text>
                     </LinearGradient>
                 }
-                <TouchableOpacity onPress={() => this.goModalChiTiet(item, text)} key={index} style={{ borderColor: colors.black_20, borderWidth: 0.5, flexDirection: 'column' }}>
+                <TouchableOpacity onPress={() => this.goModalChiTiet(item, text)} key={index} style={{ borderBottomColor: colors.black_20, borderBottomWidth: 0.5, flexDirection: 'column' }}>
                     <View
                         style={{
-                            paddingVertical: 15, paddingHorizontal: 15, minHeight: 100,
+                            paddingVertical: 15, paddingHorizontal: 12, minHeight: 100,
                             backgroundColor: item.IDTrangThai == 1 ? 'white' : '#edf2fa'
                         }}>
-                        <View style={[nstyles.nrow, { alignItems: 'center' }]}>
+                        <View style={[nstyles.nrow, { }]}>
                             <Image
                                 source={Images.icBell}
-                                style={nstyles.nIcon18}
+                                style={nstyles.nIcon22}
                                 resizeMode='contain'
                             />
-                            <View style={{ paddingLeft: 15 }}>
+                            <View style={{ paddingLeft: 10 ,  paddingRight: 10 }}>
                                 {item.IDTrangThai == 0 ? <Text numberOfLines={2} style={{ fontSize: sizes.reSize(14) }}>Giáo viên <Text style={{ fontWeight: 'bold' }}>{item.TenLop} </Text>{item.IDLoai == 5 ? 'gửi ghi chú báo bài ' : 'gửi báo bài '}đến <Text style={{ fontWeight: 'bold' }}>{item.TenHocSinh}</Text></Text>
                                     :
                                     <Text numberOfLines={2} style={{ fontSize: sizes.reSize(14) }}>Giáo viên {item.TenLop} {item.IDLoai == 5 ? 'gửi ghi chú báo bài ' : 'gửi báo bài '}đến {item.TenHocSinh}</Text>
@@ -157,27 +155,8 @@ class ListBaoBai extends Component {
                             }
                         </View>
                     </View>
-
-                    {/* <View style={{ paddingHorizontal: 10, paddingBottom: 10, flexDirection: 'row', backgroundColor: item.IDTrangThai == 1 ? 'white' : '#edf2fa' }}>
-                            {item.TieuDeVideo != '' ?
-                                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                                    <Image source={Images.icPlayVideo} style={nstyles.nIcon18} resizeMode='contain' />
-                                    <Text style={{ marginLeft: 10 }}>{item.TieuDeVideo}</Text>
-                                </View> :
-                                <View></View>
-                            }
-                            {
-                                item.IsCoBaiKiemTra == true ?
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', right: 0 }}>
-                                        <Image source={Images.icBaiKiemTra} style={nstyles.nIcon18} resizeMode='contain' />
-                                        <Text style={{ marginLeft: 10 }}>Bài kiểm tra</Text>
-                                    </View> : null
-                            }
-
-
-                        </View> */}
                 </TouchableOpacity>
-            </View >
+            </View>
         );
     };
     render() {
@@ -209,17 +188,16 @@ class ListBaoBai extends Component {
                     ListFooterComponent={this.state.showload ?
                         <ActivityIndicator size='small' /> : null}
                 />
-            </View >
+            </View>
         );
     }
 }
 
-// const stChiTiettB = StyleSheet.create({
-//     text14: {
-//         ...styles.text14,
-//         marginLeft: 10
-//     }
-// })
+const stListBaoBai = StyleSheet.create({
+    styTitDat: {
+        textAlign: 'center', marginVertical: 14, marginLeft: 10, color: 'white', fontWeight: '700', fontSize: fs(16)
+    }
+})
 
 
 

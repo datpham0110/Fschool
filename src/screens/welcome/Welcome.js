@@ -3,7 +3,7 @@ import Utils from '../../app/Utils';
 import { Text, View, Dimensions, ImageBackground, Image, TouchableOpacity, Platform, ScrollView, StyleSheet, Linking } from 'react-native';
 import HeaderCom from '../../components/HeaderCom';
 import { nkey } from '../../app/keys/keyStore';
-import { nstyles } from '../../styles/styles';
+import { nstyles, nwidth, Height } from '../../styles/styles';
 import { Images } from '../../images';
 import { sizes } from '../../styles/size';
 import { colors } from '../../styles/color';
@@ -114,7 +114,7 @@ class Welcome extends Component {
 	render() {
 		isTransparent = false
 		return (
-			<View style={[nstyles.ncontainerX, { backgroundColor: colors.whitegay, width: width }]}>
+			<View style={[nstyles.ncontainerX, { backgroundColor: colors.whitegay }]}>
 				<HeaderCom
 					titleText={this.state.fullname}
 					nthis={this}
@@ -133,9 +133,9 @@ class Welcome extends Component {
 				<View style={{ backgroundColor: 'white', paddingVertical: 10, paddingHorizontal: 15, marginHorizontal: 20, top: -100, borderRadius: 6 }} >
 					<View style={[nstyles.nrow, { justifyContent: 'space-between', alignItems: 'center' }]}>
 						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_Diemdanh')}>
+							onPress={this._clickMenu('sc_ListStudentAttendance')}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.bgDiemDanh}>
 							</ImageBackground>
@@ -143,20 +143,20 @@ class Welcome extends Component {
 						</TouchableOpacity>
 
 						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_HocPhi')}>
+							onPress={this._clickMenu('sc_ListStudentTuition')}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.bgHocPhi}>
 							</ImageBackground>
 							<Text style={styles.nTextMenuBig}>Học phí</Text>
 						</TouchableOpacity>
 					</View>
-					<View style={[nstyles.nrow, { justifyContent: 'space-between', alignItems: 'center', marginTop: 5 }]}>
+					<View style={[nstyles.nrow, { justifyContent: 'space-between', alignItems: 'center', marginTop: 15 }]}>
 						<TouchableOpacity style={{ flexDirection: 'column' }}
 							onPress={this._clickMenu('sc_ListChildBaoBai')}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.bgBaoBai}>
 							</ImageBackground>
@@ -179,7 +179,7 @@ class Welcome extends Component {
 						</TouchableOpacity>
 						<TouchableOpacity style={{ flexDirection: 'column' }} onPress={this._clickMenu('sc_SelectChildChat')}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.bgChat}>
 							</ImageBackground>
@@ -201,11 +201,11 @@ class Welcome extends Component {
 								: null}
 						</TouchableOpacity>
 					</View>
-					<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-between', marginTop: 5 }]}>
+					<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }]}>
 						<TouchableOpacity style={{ flexDirection: 'column' }}
 							onPress={this._clickMenu('sc_ListChildThongBao')}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.icThonbao}>
 							</ImageBackground>
@@ -227,9 +227,9 @@ class Welcome extends Component {
 								: null}
 						</TouchableOpacity>
 						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_ThoiKhoaBieu')}>
+							onPress={this._clickMenu('sc_timetable_Stack')}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.icThpiKhoaBieu1}>
 							</ImageBackground>
@@ -251,11 +251,11 @@ class Welcome extends Component {
 								: null}
 						</TouchableOpacity>
 					</View>
-					<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-between', marginTop: 5 }]}>
+					<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }]}>
 						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={() => Utils.goscreen(this, 'sc_KhaosatHome')}>
+							onPress={() => Utils.goscreen(this, 'sc_surveyStack')}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.icKhaoSat}>
 							</ImageBackground>
@@ -278,7 +278,7 @@ class Welcome extends Component {
 						</TouchableOpacity>
 						<TouchableOpacity style={{ flexDirection: 'column' }}>
 							<ImageBackground
-								style={nstyles.nIcon140}
+								style={nstyles.nIcon120}
 								resizeMode="stretch"
 								source={Images.icoCam}>
 							</ImageBackground>
@@ -301,124 +301,6 @@ class Welcome extends Component {
 						</TouchableOpacity>
 					</View>
 				</View>
-
-
-				{/* <View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-around', marginHorizontal: width * 0.0625 }]}>
-					<TouchableOpacity onPress={() => Utils.goscreen(this, 'sc_GochocTapp')} style={{ alignItems: 'center' }}>
-						<Image source={Images.icGochoctap} resizeMode='contain' style={{ width: width * 0.26, height: width * 0.26 }} />
-					</TouchableOpacity>
-					<View style={{ width: 10 }} />
-					<TouchableOpacity onPress={() => Utils.goscreen(this, 'sc_GocHoatDongHome')} style={{ alignItems: 'center' }}>
-						<Image source={Images.icGocHoatDong} resizeMode='contain' style={{ width: width * 0.26, height: width * 0.26 }} />
-					</TouchableOpacity>
-					<View style={{ width: 10 }} />
-					<TouchableOpacity onPress={() => Utils.goscreen(this, 'sc_KhaosatHome')} style={{ alignItems: 'center' }}>
-						<Image source={Images.icKhaoSat} resizeMode='contain' style={{ width: width * 0.26, height: width * 0.26 }} />
-					</TouchableOpacity>
-				</View>
-				<View
-					style={{
-						flexDirection: 'column',
-						marginTop: width * 0.05,
-						marginHorizontal: width * 0.0625
-					}}>
-					<TouchableOpacity onPress={this._clickMenu('sc_ListChildThongBao')}>
-						<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-							<Image
-								resizeMode="contain"
-								source={Images.icNotifycation1}
-								style={{ width: width * 0.07, height: width * 0.07, margin: 10 }}
-							/>
-							<View style={styles.viewTextMenuSmall}>
-								<Text style={{ flex: 1, marginLeft: 5, fontSize: sizes.sText17 }}>Thông báo</Text>
-								{
-									this.props.sumNotifyThongBao > 0 ?
-										<View>
-											<Image
-												style={{ width: 18, height: 18, tintColor: colors.redStar }}
-												source={Images.icStarReview}>
-											</Image>
-											<Pulse
-												color={colors.redStar}
-												numPulses={3}
-												diameter={width * 0.09}
-												speed={50}
-												duration={2}
-											/>
-										</View>
-										: null}
-								<Image resizeMode="contain" source={Images.iconNext1} style={{ width: width * 0.04, height: width * 0.04 }} />
-							</View>
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
-						//sc_ListChillThuMoiSuKien
-						//sc_ThuMoiSuKien
-						onPress={this._clickMenu('sc_ListChillThuMoiSuKien')}>
-						<View style={styles.vMenuSmall}>
-							<Image resizeMode="contain" source={Images.iconMail1} style={{ width: width * 0.07, height: width * 0.07, margin: 10 }} />
-							<View style={styles.viewTextMenuSmall}>
-								<Text style={{ flex: 1, marginLeft: 5, fontSize: sizes.sText17 }}>Thư mời - Sự kiện</Text>
-								{
-									this.props.sumNotifyThuMoiSuKien > 0 ?
-										<View>
-											<Image style={{ width: 18, height: 18, tintColor: colors.redStar }} source={Images.icStarReview}></Image>
-											<Pulse
-												color={colors.redStar}
-												numPulses={3}
-												diameter={width * 0.09}
-												speed={50}
-												duration={2}
-											/>
-										</View>
-										: null}
-								<Image
-									resizeMode="contain"
-									source={Images.iconNext1}
-									style={{ width: width * 0.04, height: width * 0.04 }}
-								/>
-							</View>
-
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={this._clickMenu('sc_ThoiKhoaBieu')}>
-						<View style={styles.vMenuSmall}>
-							<Image resizeMode="contain" source={Images.icThpiKhoaBieu1} style={{ width: width * 0.07, height: width * 0.07, margin: 10 }} />
-							<TouchableOpacity
-								onPress={this._clickMenu('sc_ThoiKhoaBieu')}
-								style={styles.viewTextMenuSmall}>
-								<Text style={{ flex: 1, marginLeft: 5, fontSize: sizes.sText17 }}>Thời khóa biểu</Text>
-								<Image
-									resizeMode="contain"
-									source={Images.iconNext1}
-									style={{ width: width * 0.04, height: width * 0.04 }}
-								/>
-							</TouchableOpacity>
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={this._clickMenu('sc_TienichHome')}>
-						<View style={styles.vMenuSmall}>
-							<Image resizeMode="contain" source={Images.icFeedRed} style={{ width: width * 0.07, height: width * 0.07, margin: 10 }} />
-							<TouchableOpacity
-								onPress={this._clickMenu('sc_TienichHome')}
-								style={{ flex: 1, flexDirection: 'row', borderBottomWidth: 1, height: width * 0.12, alignItems: 'center', borderBottomColor: colors.veryLightPinkThree }}	>
-								<Text style={{ flex: 1, marginLeft: 5, fontSize: sizes.sText17 }}>Các tiện ích khác</Text>
-								<Image resizeMode="contain" source={Images.iconNext1} style={{ width: width * 0.04, height: width * 0.04 }} />
-							</TouchableOpacity>
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={this._clickMenu('sc_Hotro')}>
-						<View style={styles.vMenuSmall}>
-							<Image resizeMode="contain" source={Images.icCall} style={{ width: width * 0.07, height: width * 0.07, margin: 10 }} />
-							<TouchableOpacity
-								onPress={this._clickMenu('sc_Hotro')}
-								style={{ flex: 1, flexDirection: 'row', borderBottomWidth: 1, height: width * 0.12, alignItems: 'center', borderBottomColor: colors.veryLightPinkThree }}	>
-								<Text style={{ flex: 1, marginLeft: 5, fontSize: sizes.sText17 }}>Hỗ trợ 24/7</Text>
-								<Image resizeMode="contain" source={Images.iconNext1} style={{ width: width * 0.04, height: width * 0.04 }} />
-							</TouchableOpacity>
-						</View>
-					</TouchableOpacity>
-				</View> */}
 			</View>
 		);
 	}

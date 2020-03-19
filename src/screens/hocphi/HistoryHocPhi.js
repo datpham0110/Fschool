@@ -157,7 +157,7 @@ export default class HistoryHocPhi extends React.Component {
           <NotifyLichsu CTlichSu={this.state.CTlichSu} />
         </View>
         <IsLoading ref={refs => this.waitting = refs} />
-      </View >
+      </View>
     )
   }
 }

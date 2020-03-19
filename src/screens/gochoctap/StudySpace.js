@@ -14,7 +14,7 @@ import { nGlobalKeys } from '../../app/keys/globalKey';
 import ListEmpty from "../../components/ListEmpty"
 const { width, height } = Dimensions.get("window")
 
-class GochocTapp extends Component {
+class StudySpace extends Component {
     constructor(props) {
         super(props)
         nthisApp = this;
@@ -27,7 +27,8 @@ class GochocTapp extends Component {
             refreshing: true,
         }
         this.flagNoyify = Utils.ngetParam(this, 'flagNoyify', false);
-        this.data = Utils.ngetParam(this, 'data')
+        this.data = Utils.ngetParam(this, 'data');
+        this.student = Utils.ngetParam(this, 'student')
     }
 
     componentDidMount() {
@@ -47,12 +48,12 @@ class GochocTapp extends Component {
             }
         }
         else {
-            if (this.props.listchild.length > 0) {
-                this.setState({ hocSinhData: this.props.listchild[0] }, this._loadListGocHocTap)
-                Utils.setGlobal(nGlobalKeys.childSelected, this.props.listchild[0]);
-            } else {
-                Utils.showMsgBoxOK(this, 'Thông báo', 'Tài khoản chưa liên kết với học sinh', 'Đóng', () => { Utils.goback(this) })
-            }
+            // if (this.props.listchild.length > 0) {
+                this.setState({ hocSinhData: this.student }, this._loadListGocHocTap)
+                Utils.setGlobal(nGlobalKeys.childSelected, this.student);
+            // } else {
+            //     Utils.showMsgBoxOK(this, 'Thông báo', 'Tài khoản chưa liên kết với học sinh', 'Đóng', () => { Utils.goback(this) })
+            // }
         }
     }
     componentWillUnmount() {
@@ -137,7 +138,7 @@ class GochocTapp extends Component {
                     titleText={"Góc học tập"} />
                 <View style={[nstyles.nbody, { backgroundColor: colors.whitegay, marginHorizontal: 15 }]}>
                     <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-                        <TouchableOpacity
+                        <View
                             style={[nstyles.nrow, {
                                 backgroundColor: 'white', justifyContent: 'center', flex: 1,
                                 alignItems: "center", paddingVertical: 10, borderRadius: 4
@@ -153,8 +154,8 @@ class GochocTapp extends Component {
                                     {this.state.hocSinhData.TenKhachHang}
                                 </Text>
                             </View>
-                            <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.black_20, marginLeft: 5, top: -10 }]} />
-                        </TouchableOpacity>
+                            {/* <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nIcon20, { tintColor: colors.black_20, marginLeft: 5, top: -10 }]} /> */}
+                        </View>
                     </View>
                     <View style={{ backgroundColor: 'white', paddingVertical: 5, borderRadius: 3 }}>
                         <View style={{ backgroundColor: colors.whitegay, flexDirection: 'row', justifyContent: 'space-between', margin: 5, paddingVertical: 8, paddingHorizontal: 25, borderRadius: 5 }}>
@@ -180,11 +181,11 @@ class GochocTapp extends Component {
                         renderItem={this.renderItem}
                         keyExtractor={(item, index) => index.toString()} />
                 </View>
-            </View >
+            </View>
         )
     }
 }
 const mapStateToProps = state => ({
     listchild: state.listchild
 })
-export default Utils.connectRedux(GochocTapp, mapStateToProps, false)
+export default Utils.connectRedux(StudySpace, mapStateToProps, false)

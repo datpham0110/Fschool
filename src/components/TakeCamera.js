@@ -182,6 +182,7 @@ export default class TakeCamera extends Component {
           }}
           style={stTakeCamera.preview}
           type={this.state.type}
+          captureAudio={false}
           autoFocus='on'
         >
           {/* Custom component in Camera View */}

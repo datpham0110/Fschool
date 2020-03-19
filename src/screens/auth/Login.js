@@ -47,7 +47,8 @@ class Login extends Component {
       let res2 = await infoPhuhuyenh();
       if (res2.success == true) {
         this.props.setListChild(res2.data.HocSinh);
-        this.props.setAvatar(res2.data.Avatar)
+        this.props.setAvatar(res2.data.Avatar);
+        this.props.setFullname(res2.data.Fullname)
         Utils.goscreen(this, "sc_Welcome");
       } else {
         Utils.showMsgBoxOK(this, "Thông báo", "Server đang bảo trì vui lòng thử lại", "Đóng");
@@ -114,14 +115,15 @@ class Login extends Component {
             alignSelf: "center", marginBottom: 40, textDecorationLine: 'underline', fontWeight: 'bold'
           }}>Liên hệ với chăm sóc khách hàng</Text>
         </TouchableOpacity>
-      </ImageBackground >
+      </ImageBackground>
     );
   }
 }
 
 const mapStateToProps = state => ({
   listchild: state.listchild,
-  avatar: state.avatar
+  avatar: state.avatar,
+
 });
 
 export default Utils.connectRedux(Login, mapStateToProps, true);

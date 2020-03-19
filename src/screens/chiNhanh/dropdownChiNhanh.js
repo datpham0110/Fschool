@@ -30,7 +30,6 @@ export default class DropDownChiNhanh extends Component {
     };
   }
   componentDidMount() {
-    Utils.nlog('--------------------- getListChiNhanhV2')
     this.getData();
   }
   getData = async () => {

@@ -32,43 +32,45 @@ export default class EnterYourPhoneNumber extends React.Component {
     }
   }
   _submit = async () => {
-    // if (
-    //   this.state.phonenumber.toString().trim().length == 10
-    // ) {
-    // Utils.nsetStore(nkey.phonenumber, this.state.phonenumber.toString().trim())
-    res = await enterPhoneNumber(this.state.phonenumber.toString().trim())
-    if (res.success == true) {
-      Utils.setGlobal(nGlobalKeys.IdCN, res.data.IdCN)
-      Utils.setGlobal(nGlobalKeys.IdUser, res.data.IdUser)
-      Utils.setGlobal(nGlobalKeys.OTP, res.data.OTP)
-      Utils.setGlobal(nGlobalKeys.OTPTime, res.data.OTPTime)
-      Utils.setGlobal(nGlobalKeys.OTPTimeApp, res.data.OTPTimeApp)
-      Utils.goscreen(this, "sc_NotifyEnterPhoneNumber")
-    } else if (res.success == false && res.error.code == 103) {
-      Utils.goscreen(this, "sc_AuthLogin")
+    if (this.state.phonenumber.slice(0, 1) != 0) {
+      Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ bắt đầu bằng số 0", "Đóng");
+      return;
     }
-    //  else {
-    //   Utils.showMsgBoxOK(this, "Thông báo", "Server đang bảo trì vui lòng thử lại.", "Đóng")
-    // }
-    // } else if (this.state.phonenumber.toString().trim().length == 0) {
-    //   Utils.showMsgBoxOK(
-    //     this,
-    //     "Thông báo",
-    //     "Số điện thoại không được để trống",
-    //     "Đóng"
-    //   )
-    //   return
-    // } else if (
-    //   this.state.phonenumber.toString().trim().length != 10
-    // ) {
-    //   Utils.showMsgBoxOK(
-    //     this,
-    //     "Thông báo",
-    //     "Số điện thoại hợp lệ phải gồm 10 số",
-    //     "Đóng"
-    //   )
-    //   return
-    // }
+    if (this.state.phonenumber.toString().trim().length == 10) {
+      Utils.nsetStore(nkey.phonenumber, this.state.phonenumber.toString().trim())
+      let res = await enterPhoneNumber(this.state.phonenumber.toString().trim())
+      Utils.nlog('enterPhoneNumber', res)
+      if (res.success == true) {
+        Utils.setGlobal(nGlobalKeys.IdCN, res.data.IdCN)
+        Utils.setGlobal(nGlobalKeys.IdUser, res.data.IdUser)
+        Utils.setGlobal(nGlobalKeys.OTP, res.data.OTP)
+        Utils.setGlobal(nGlobalKeys.OTPTime, res.data.OTPTime)
+        Utils.setGlobal(nGlobalKeys.OTPTimeApp, res.data.OTPTimeApp)
+        // Utils.goscreen(this, "sc_AccuracyOTP")
+        Utils.goscreen(this, "sc_NotifyEnterPhoneNumber")
+      } else if (res.success == false && res.error.code == 103) {
+        Utils.goscreen(this, "sc_AuthLogin")
+      }
+      else {
+        Utils.showMsgBoxOK(this, "Thông báo", "Server đang bảo trì vui lòng thử lại.", "Đóng")
+      }
+    }
+    else if (this.state.phonenumber.toString().trim().length == 0) {
+      Utils.showMsgBoxOK(
+        this,
+        "Thông báo",
+        "Số điện thoại không được để trống",
+        "Đóng"
+      )
+      return;
+    } else {
+        // if (this.state.phonenumber.slice(0, 1) != 0) {
+        //   Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ bắt đầu bằng số 0", "Đóng");
+        //   return;
+        // }
+        Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ phải gồm 10 số", "Đóng")
+        return;
+    }
   }
   _fillPhone = (value) => {
     this.setState({
@@ -80,6 +82,19 @@ export default class EnterYourPhoneNumber extends React.Component {
   }
   onTouch = () => {
     this.setState({ loading: true })
+  }
+  _fillPhone = (item) => {
+    // if(item.in){
+
+    // }
+    // if (this.state.phonenumber.length == 0) {
+    //   if (item.slice(0, 1) != 0) {
+    //     Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ bắt đầu bằng số 0", "Đóng");
+    //     return;
+    //   }
+    // }
+    this.setState({ phonenumber: item })
+    // this.state.phonenumber = text
   }
   render() {
     return (
@@ -100,7 +115,7 @@ export default class EnterYourPhoneNumber extends React.Component {
                 </Text>
               </View>
               <View style={{ marginLeft: width / 10, marginRight: width / 10, marginTop: 10 }}>
-                <Input placeholder={"Nhập số điện thoại"} onChangeText={text => (this.state.phonenumber = text)} keyboardType={"number-pad"} />
+                <Input placeholder={"Nhập số điện thoại"} onChangeText={text => this._fillPhone(text)} keyboardType={"number-pad"} />
                 <ButtonCom
                   onPress={this._submit}
                   style={{ marginTop: 10, backgroundColor: colors.colorPink }}
@@ -142,7 +157,7 @@ export default class EnterYourPhoneNumber extends React.Component {
             </View>
             : null
         }
-      </View >
+      </View>
 
     )
   }

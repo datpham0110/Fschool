@@ -10,10 +10,7 @@ async function deleteChildToAccount(msChild) {
 	let strBody = JSON.stringify({
 		MaKhachHang: msChild
 	})
-	Utils.nlog('----------------------- strBody', strBody)
-	Utils.nlog(PREFIX1 + `XoaHocSinh?MaKhachHang=` + msChild)
 	let res = await Utils.post_apiToken(PREFIX1 + `XoaHocSinh?MaKhachHang=` + msChild, strBody, false, false)
-	Utils.nlog('----------------------- res', res)
 	return res
 }
 export { listchild, deleteChildToAccount };

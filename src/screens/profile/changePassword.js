@@ -48,27 +48,17 @@ export default class ChangePassword extends Component {
             Utils.showMsgBoxOK(
                 this,
                 "Thông báo",
-                "Mật khẩu mới phải trên 6 ký tự",
+                "Mật khẩu mới phải 6 ký tự trở lên",
                 "Đóng"
             );
             return;
         }
         else if (this.state.ConfirmPassword.toString().trim().length < 6) {
-            Utils.showMsgBoxOK(
-                this,
-                "Thông báo",
-                "Nhập lại mật khẩu mới phải trên 6 ký tự",
-                "Đóng"
-            );
+            Utils.showMsgBoxOK( this, "Thông báo","Nhập lại mật khẩu mới phải 6 ký tự trở lên","Đóng");
             return;
         }
         else if (this.state.NewPassword != this.state.ConfirmPassword) {
-            Utils.showMsgBoxOK(
-                this,
-                "Thông báo",
-                "Mật khẩu mới và nhập lại mật khẩu mới phải trùng nhau",
-                "Đóng"
-            );
+            Utils.showMsgBoxOK(this,"Thông báo","Mật khẩu mới và nhập lại mật khẩu mới phải trùng nhau","Đóng");
             return;
         } else {
 
@@ -79,28 +69,12 @@ export default class ChangePassword extends Component {
                     this.state.ConfirmPassword
                 );
                 if (res.success == true) {
-                    Utils.showMsgBoxOK(
-                        this,
-                        "Thông báo",
-                        "Đổi mật khẩu thành công",
-                        "Đóng",
-                        this.onCancel
-                    );
+                    Utils.showMsgBoxOK(this, "Thông báo", "Đổi mật khẩu thành công","Đóng",this.onCancel);
                 } else {
-                    Utils.showMsgBoxOK(
-                        this,
-                        "Thông báo",
-                        "Đổi mật khẩu không thành công",
-                        "Đóng",
-                        this.onCancel
-                    );
+                    Utils.showMsgBoxOK(this,"Thông báo", "Đổi mật khẩu không thành công","Đóng",this.onCancel);
                 }
             } else {
-                Utils.showMsgBoxOK(
-                    this,
-                    "Thông báo",
-                    "Mật khẩu mới không được trùng với mật khẩu cũ",
-                    "Đóng");
+                Utils.showMsgBoxOK(this,"Thông báo","Mật khẩu mới không được trùng với mật khẩu cũ","Đóng");
             }
 
         }

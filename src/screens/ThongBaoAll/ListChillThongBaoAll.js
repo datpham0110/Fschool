@@ -37,8 +37,8 @@ class ListChildThongBaoAll extends Component {
                     (<Image resizeMode="contain" source={Images.icBe1} style={{ width: width * 0.15, height: width * 0.15, marginLeft: 20 }} />) :
                     (<Image resizeMode="contain" source={Images.icBe2} style={{ width: width * 0.15, height: width * 0.15, marginLeft: 20 }} />)}
                 <View style={{ flexDirection: "column", marginLeft: 10, justifyContent: "center", flex: 1 }}>
-                    < Text style={{ color: "white", fontSize: sizes.sizes.nImgSize18, fontWeight: '700' }}> {item.TenKhachHang}</Text>
-                    < Text style={{ color: "white", fontSize: sizes.sizes.nImgSize16, fontWeight: '600', marginTop: 5 }}>{item.LopHoc}</Text>
+                    <Text style={{ color: "white", fontSize: sizes.sizes.nImgSize18, fontWeight: '700' }}> {item.TenKhachHang}</Text>
+                    <Text style={{ color: "white", fontSize: sizes.sizes.nImgSize16, fontWeight: '600', marginTop: 5 }}>{item.LopHoc}</Text>
                 </View>
                 {item.Soluong > 0 ?
                     <View style={styles.vIconNotifyBig}>
@@ -59,7 +59,7 @@ class ListChildThongBaoAll extends Component {
                     titleText={'Danh sách học sinh'}
                 />
                 <ScrollView>
-                    {this.props.listChildThongBaoAll.length == 0 ? <Text style={{ textAlign: 'center', marginTop: 20 }}>Tài khoản chưa liên kết với học sinh </Text> : null}
+                    {this.props.listChildThongBaoAll.length == 0 ? <Text style={styles.styTitle}>Tài khoản chưa liên kết với học sinh </Text> : null}
                     <FlatList
                         renderItem={this._renderItemChild}
                         data={this.props.listChildThongBaoAll}
@@ -80,6 +80,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 20
+    },
+    styTitle: {
+        textAlign: 'center',
+        marginTop: 20,
+        fontSize: sizes.fs(18),
+        fontWeight: '800', 
+        color: colors.colorVeryLightPinkTwo
     },
 })
 const mapStateToProps = state => ({

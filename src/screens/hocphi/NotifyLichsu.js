@@ -102,7 +102,7 @@ export default class NotifyLichsu extends Component {
           </View>
         </View>
         : <Text style={{ textAlign: 'center' }}>
-          Không có học sinh để hiển thị
+          Không có lịch sửa học phí để hiển thị
         </Text>
     )
   }

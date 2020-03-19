@@ -37,11 +37,11 @@ class PichChild extends Component {
     }
   };
   _ClickMenu = (IDLopHoc, IDKhachHang, IDChiNhanh, TenKH, GioiTinh) => () => {
-    Utils.setGlobal(nGlobalKeys.IDLopHoc, IDLopHoc);
-    Utils.setGlobal(nGlobalKeys.IDKhachHang, IDKhachHang);
+    // Utils.setGlobal(nGlobalKeys.IDLopHoc, IDLopHoc);
+    // Utils.setGlobal(nGlobalKeys.IDKhachHang, IDKhachHang);
     Utils.setGlobal(nGlobalKeys.IDChiNhanh, IDChiNhanh);
     Utils.setGlobal(nGlobalKeys.TenKH, TenKH);
-    Utils.setGlobal(nGlobalKeys.GioiTinh, GioiTinh);
+    // Utils.setGlobal(nGlobalKeys.GioiTinh, GioiTinh);
 
     Utils.goscreen(this, "sc_Welcome");
   };

@@ -144,12 +144,22 @@ class ChiTietThongBao extends Component {
   }
 
   _loadDataNotifyShow = async () => {
-    let res = await ThongBao_ListAll_App_V2(0, 0, -1, Utils.ngetParam(this, 'IDChiNhanh'));
-    if (res.success == true) {
-      this.props.setSumNotifyAllApp(res.CountTT > 100 ? 99 : res.CountTT);
-    } else {
+    // let res = await ThongBao_ListAll_App_V2(0, 0, -1, Utils.ngetParam(this, 'IDChiNhanh'));
+    // if (res.success == true) {
+    //   this.props.setSumNotifyAllApp(res.CountTT > 100 ? 99 : res.CountTT);
+    // } else {
+    //   this.props.setSumNotifyAllApp([]);
+    // }
+    let res = await notifyParents(0); // Thông báo 1
+		if (res.success == true && res.data.HocSinh.length > 0) {
+			let count = 0;
+			for(let i = 0; i < res.data.HocSinh.length; i++){
+				count += res.data.HocSinh[i].Soluong;
+			}
+			this.props.setSumNotifyAllApp(count > 100 ? 99 : count);
+		} else {
       this.props.setSumNotifyAllApp([]);
-    }
+		}
   }
 
   _notifyThongBaoAll = async () => {
@@ -311,7 +321,7 @@ class ChiTietThongBao extends Component {
                   style={{ textAlign: "center", fontSize: sizes.sizes.sText16 }}> {this.type == 'ThuMoiSuKien' ? <Text>Giáo viên {data.TenLop} gửi thư mời sự kiện đến {data.TenHocSinh} </Text> :
                     this.type == 'ketquahoctap' ? <Text>Giáo viên {data.TenLop} gửi kết quả học tập đến {data.TenHocSinh} </Text> :
                       <Text>
-                        <Text style={{ fontWeight: 'bold' }}>Giáo viên {data.TenLop}</Text> gửi{data.IDLoai == 5 ? <Text>báo bài </Text> : <Text> {data.TenThongBao} </Text>} đến <Text style={{ fontWeight: 'bold' }}>{data.TenHocSinh}</Text>
+                        <Text style={{ fontWeight: 'bold' }}>Giáo viên {data.TenLop}</Text> gửi{data.IDLoai == 5 ? <Text>báo bài </Text> : <Text> {data.TenThongBao} </Text>}đến <Text style={{ fontWeight: 'bold' }}>{data.TenHocSinh}</Text>
                       </Text>}
                 </Text>
               }

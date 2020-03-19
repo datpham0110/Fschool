@@ -22,6 +22,7 @@ class ThoiKhoaBieuHome extends Component {
         };
         this.IDHocSinh = Utils.ngetParam(this, 'IDHocSinh')
         this.flagNotify = Utils.ngetParam(this, 'flagNotify', false);
+        this.student = Utils.ngetParam(this, 'student', '');
     }
 
 
@@ -30,7 +31,7 @@ class ThoiKhoaBieuHome extends Component {
         if (this.flagNotify == true) {
             this._setHocSinh(this.IDHocSinh);
         } else {
-            this._setHocSinh();
+            this._setHocSinh(this.student.IDKhachHang);
         }
     }
     componentWillUnmount() {
@@ -136,14 +137,30 @@ class ThoiKhoaBieuHome extends Component {
                     iconLeft={Images.icbackspace}
                     titleText={"Thời khoá biểu"} />
                 <View style={[nstyles.nstyles.nbody, { paddingHorizontal: nstyles.khoangcach }]}>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={[nrow, { alignItems: "center", marginHorizontal: 10, alignSelf: 'center' }]}
                         onPress={this._selectHocSinh}>
                         <Text style={{ fontSize: sizes.reText(16), fontWeight: "800", paddingVertical: 10 }}>
                             {childSelected.TenKhachHang ? childSelected.TenKhachHang : '...'}
                         </Text>
                         <Image resizeMode="contain" source={Images.icShowLessDown} style={[nstyles.nstyles.nIcon20, { tintColor: colors.black_20, marginLeft: 5 }]} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+
+                    <View style={[nstyles.nstyles.nrow, { backgroundColor: 'white', paddingHorizontal: 20, paddingVertical: 10, marginBottom: 10, borderRadius: 4 }]}>
+                        <View
+                            style={[nstyles.nstyles.nrow, { alignItems: "center", marginHorizontal: 10, justifyContent: 'center', flex: 1 }]}>
+                            <View>
+                                <Text style={{ fontSize: 15, paddingBottom: 5, fontWeight: "500", textAlign: 'center', color: 'black' }}>
+                                    {this.state.childSelected.LopHoc}
+                                </Text>
+                                <Text style={{
+                                    fontSize: 16, fontWeight: "800", color: "black"
+                                }}>
+                                    {this.state.childSelected.TenKhachHang}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
                     <View style={{ flex: 1, backgroundColor: colors.white }}>
                         <FlatList
                             refreshing={this.state.isLoading}
@@ -156,7 +173,7 @@ class ThoiKhoaBieuHome extends Component {
                         />
                     </View>
                 </View>
-            </View >
+            </View>
         );
     }
 }
