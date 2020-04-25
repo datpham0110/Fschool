@@ -151,15 +151,15 @@ class ChiTietThongBao extends Component {
     //   this.props.setSumNotifyAllApp([]);
     // }
     let res = await notifyParents(0); // Thông báo 1
-		if (res.success == true && res.data.HocSinh.length > 0) {
-			let count = 0;
-			for(let i = 0; i < res.data.HocSinh.length; i++){
-				count += res.data.HocSinh[i].Soluong;
-			}
-			this.props.setSumNotifyAllApp(count > 100 ? 99 : count);
-		} else {
+    if (res.success == true && res.data.HocSinh.length > 0) {
+      let count = 0;
+      for (let i = 0; i < res.data.HocSinh.length; i++) {
+        count += res.data.HocSinh[i].Soluong;
+      }
+      this.props.setSumNotifyAllApp(count > 100 ? 99 : count);
+    } else {
       this.props.setSumNotifyAllApp([]);
-		}
+    }
   }
 
   _notifyThongBaoAll = async () => {

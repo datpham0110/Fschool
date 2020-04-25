@@ -51,7 +51,6 @@ target 'Fschool' do
  
 
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'FschoolTests' do
     inherit! :search_paths

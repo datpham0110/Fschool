@@ -24,7 +24,7 @@ export const Images = {
 	icNext: require('./imgApp/icNext.png'),
 	icPlayVideo: require('./imgApp/icPlayVideo.png'),
 	icBaiKiemTra: require('./imgApp/icBaiKiemTra.png'),
-
+	icUser:require('./imgApp/icUser.png'),
 
 	// bgLogin
 	//--component
@@ -180,6 +180,7 @@ export const Images = {
 	logoSSC: require('./imgApp/logoSSC.png'),
 	icCancelTour: require('./imgApp/icCancelTour.png'),
 	icThonbao: require('./imgApp/icThonbao.png'),
-	icoCam: require('./imgApp/icoCam.png')
+	icoCam: require('./imgApp/icoCam.png'),
 	//logoSSC.png
+	Fchool:require('./imgApp/Fchool.png')
 };

@@ -23,7 +23,8 @@ import { updateAvatarHS } from "../../apis/apiLogin";
 import { appConfig } from "../../app/Config";
 import { nstyles } from "../../styles/styles";
 import IsLoading from "../../components/IsLoading";
-
+export const db1 = db.database();
+import { db } from '../../app/Config';
 class MenuRight extends Component {
 	constructor(props) {
 		super(props);
@@ -39,6 +40,7 @@ class MenuRight extends Component {
 			props.listchild.length == 0 ? 0 : props.listchild[0].IDChiNhanh;
 		let childSelect = props.listchild.length == 0 ? undefined : props.listchild[0];
 		this.state = {
+			listHocSinh: [],
 			fullname: "",
 			idHocSinh: temp,
 			id: 0,
@@ -52,10 +54,29 @@ class MenuRight extends Component {
 		Utils.setGlobal(nGlobalKeys.IDKhachHang, IDKhachHang);
 		Utils.setGlobal(nGlobalKeys.IDChiNhanhHocSinh, IDChiNhanhHocSinh);
 	}
+	dsHocSinh = async () => {
+		//   //Lấy list
+		db1.ref('/Tbl_HocSinh').on('value', (snapshot) => {
+			let data = snapshot.val();
+			// let keys = Object.keys(data);
+			let items = Object.values(data);
+			// let items2 = data[keys[0]];
+			if (items != null) {
+				for (let i = 0; i < items.length; i++) {
+					items[i].isDiemDanh = -1
+				}
+				Utils.nlog('dsHocSinh------------', items)
+				this.setState({ listHocSinh: items })
+			} else {
+				Utils.showMsgBoxOK(this, 'Thông báo', 'Không có học sinh để hiển thị', 'Đóng')
+			}
+		});
+	}
 	componentDidMount() {
-		OneSignal.addEventListener('opened', this.onOpened);
-		this._getData();
-		this._loadDataInfomation();
+		this.dsHocSinh()
+		// OneSignal.addEventListener('opened', this.onOpened);
+		// this._getData();
+		// this._loadDataInfomation();
 	}
 	_loadDataInfomation = async () => {
 		this._notifyThongBao();
@@ -394,18 +415,16 @@ class MenuRight extends Component {
 	}
 
 	_renderItemChild = ({ item, index }) => {
-		var avata = appConfig.domainImgavatar + item.avatar
-		Utils.nlog('-----------------_renderItemChild ', avata)
 		return (
 			<View style={{ flexDirection: "row", paddingTop: 10, paddingBottom: 10, backgroundColor: item.GioiTinh == "Nữ" ? colors.colorGreenThere1 : colors.colorGreenTwo1, alignItems: 'center' }} >
-				<TouchableOpacity style={{ marginLeft: 20 }} onPress={() => this._goMediapicker(item.IDKhachHang)}>
+				<TouchableOpacity style={{ marginLeft: 20 }} onPress={() => this._goMediapicker(item.TenHocSinh)}>
 					{item.GioiTinh == "Nữ" ?
-						(<Image resizeMode='cover' defaultSource={Images.icBe1} source={{ uri: appConfig.domainImgavatar + item.avatar }} style={[nstyles.nIcon65, { borderRadius: 32.5 }]} />) :
-						(<Image resizeMode="cover" defaultSource={Images.icBe2} source={{ uri: appConfig.domainImgavatar + item.avatar }} style={[nstyles.nIcon65, { borderRadius: 32.5 }]} />)}
+						(<Image resizeMode='cover' source={Images.icBe1} style={[nstyles.nIcon65, { borderRadius: 32.5 }]} />) :
+						(<Image resizeMode="cover" source={Images.icBe2} style={[nstyles.nIcon65, { borderRadius: 32.5 }]} />)}
 				</TouchableOpacity>
 				<View
 					style={{ flexDirection: "column", marginLeft: 10, justifyContent: "center", flex: 1 }}>
-					< Text style={{ color: "white", fontSize: sizes.fs(20), fontWeight: 'bold' }}>{item.TenKhachHang}</Text>
+					< Text style={{ color: "white", fontSize: sizes.fs(20), fontWeight: 'bold' }}>{item.TenHocSinh}</Text>
 					< Text style={{ color: "white", fontSize: sizes.fs(18), marginTop: 5, fontWeight: '500' }}>{item.LopHoc}</Text>
 				</View>
 			</View>
@@ -424,27 +443,21 @@ class MenuRight extends Component {
 		this.props.navigation.closeDrawer();
 	}
 	render() {
-		Utils.nlog('this.props.listchild', this.props.listchild)
 		return (
 			<View style={nstyles.ncontainerX} >
 				<ScrollView showsVerticalScrollIndicator={false} style={nstyles.nbody}>
 					<View style={{ height: 200, backgroundColor: colors.colorGreenOne1, alignItems: "center", paddingTop: 30 }} >
 						<View style={{ borderRadius: 40, marginTop: 10, width: 80, height: 80, alignItems: 'center' }}>
-							{/* <Image
-									resizeMode="cover"
-									source={Images.imgProfile}
-									style={{ borderRadius: 40, width: 80, height: 80, backgroundColor: 'white' }} /> */}
 							<Image
-								defaultSource={Images.imgProfile}
+								source={Images.imgProfile}
 								resizeMode="cover"
-								source={{ uri: this.props.avatar.length > 0 ? this.props.avatar : Images.imgProfile }}
 								style={{ borderRadius: 40, width: 80, height: 80, position: 'absolute' }} />
 						</View>
-						<Text style={[styles.text24, { justifyContent: "center", color: "white", marginTop: 10, fontWeight: '700' }]} > {this.state.fullname} </Text>
+						<Text style={[styles.text24, { justifyContent: "center", color: "white", marginTop: 10, fontWeight: '700' }]} > {'Phạm Văn Duyêt'} </Text>
 						<Text style={[styles.text14, { justifyContent: "center", color: "white", marginTop: 5, marginBottom: 20 }]}>Phụ huynh</Text>
 					</View>
 					<View>
-						<FlatList renderItem={this._renderItemChild} data={this.props.listchild} extraData={this.state.id} keyExtractor={(item, index) => index.toString()} scrollEnabled={false} />
+						<FlatList renderItem={this._renderItemChild} data={this.state.listHocSinh} extraData={this.state.id} keyExtractor={(item, index) => index.toString()} scrollEnabled={false} />
 					</View>
 					<TouchableOpacity
 						onPress={this._clickChild}
@@ -464,15 +477,6 @@ class MenuRight extends Component {
 						/>
 					</TouchableOpacity>
 					<View style={{ flexDirection: "column", marginLeft: width * 0.0625, marginRight: width * 0.0625, marginTop: width * 0.05, marginBottom: 100 }}  >
-						<TouchableOpacity onPress={this._clickMenu("sc_ThongTinTaiKhoan")} >
-							<View style={{ flexDirection: "row", alignItems: "center" }} >
-								<Image resizeMode="contain" source={Images.icInfo1} style={styles.nImageMenuBig} />
-								<View style={styles.nViewMenuBig}>
-									<Text style={{ flex: 1, marginLeft: 5, fontSize: sizes.sText17 }}>Thông tin tài khoản </Text>
-									<Image resizeMode="contain" source={Images.iconNext1} style={{ width: width * 0.04, height: width * 0.04 }} />
-								</View>
-							</View>
-						</TouchableOpacity>
 						<TouchableOpacity onPress={this._clickMenu("sc_Setting")}>
 							<View
 								style={{ flexDirection: "row", alignItems: "center" }}>

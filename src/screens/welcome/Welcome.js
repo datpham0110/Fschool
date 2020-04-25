@@ -5,7 +5,7 @@ import HeaderCom from '../../components/HeaderCom';
 import { nkey } from '../../app/keys/keyStore';
 import { nstyles, nwidth, Height } from '../../styles/styles';
 import { Images } from '../../images';
-import { sizes } from '../../styles/size';
+import { sizes, fs } from '../../styles/size';
 import { colors } from '../../styles/color';
 import { ThongBaoInsertUpdate } from '../../apis/getNotifycation';
 import { nGlobalKeys } from '../../app/keys/globalKey';
@@ -29,61 +29,14 @@ class Welcome extends Component {
 		nthisApp = this;
 		nthisRedux = this;
 	}
-	componentDidMount() {
-		this._checkVersion();
-		this.postNotification();
-		this._getData();
-		this._loadDataNotifyShow();
-		this._loadAvatar();
-		this._loadListChildChat();
-	}
-	_checkVersion = async () => {
-		let res = await Version();
-		if (res.success == true) {
-			for (let i = 0; i < res.data.length; i++) {
-				if (res.data[i].TenApp == 'PhuHuynh') {
-					if (appConfig.versionApp < res.data[i].Version) {
-						Utils.showMsgBoxOK(this, 'Thông báo', 'Ứng dụng đã có phiên bản cập nhật mới, vui lòng cập nhật ứng dụng', 'Cập nhật', this._goStore);
-					}
-				}
-			}
-		}
-	}
-	_goStore = () => {
-		if (Platform.OS === 'android') {
-			Linking.openURL('https://play.google.com/store/apps/details?id=com.yschool.app').catch((err) => Utils.nlog('Bạn phải cài đặt ứng dụng Viber trên điện thoại để sử dụng chức năng này!'));
-		} else {
-			Linking.openURL('https://apps.apple.com/us/app/yschool/id1486322665?ls=1').catch((err) => Utils.nlog('Bạn phải cài đặt ứng dụng Viber trên điện thoại để sử dụng chức năng này!'));
-		}
-	}
-	_logout = () => {
-		Utils.nsetStore(nkey.token, '');
-		Utils.nsetStore(nkey.nameuser, '');
-		Utils.nsetStore(nkey.password, '');
-		Utils.goscreen(this, 'sc_EnterYourPhoneNumber');
-	};
-	_loadDataNotifyShow = async () => {
-		let res = await ThongBao_ListAll_App_V2(0, 0);
-		Utils.nlog('-------------------------------ThongBao_ListAll_App_V2ThongBao_ListAll_App_V2', res)
-		if (res.success == true && res.data != null) {
-			this.props.setSumNotifyAllApp(res.CountTT > 100 ? 99 : res.CountTT);
-		} else {
-			this.props.setSumNotifyAllApp([]);
-		}
-	}
-	_loadAvatar = async () => {
-		let res = await infoPhuhuyenh();
-		if (res.success == true) {
-			this.props.setAvatar(res.data.Avatar);
-		}
-	}
 
-	_loadListChildChat = async () => {
-		let res = await DanhSachHocSinh();
-		if (res.success == true) {
-			this.props.setListChildChat(res.data);
-		}
-	}
+	
+	
+	
+	
+	
+
+	
 	_clickMenu = (route) => () => {
 		Utils.goscreen(this, route);
 	};
@@ -121,8 +74,8 @@ class Welcome extends Component {
 					iconLeft={Images.icMenu1}
 					iconRight={Images.icBell1}
 					onPressLeft={this._open}
-					notification={this.props.sumNotifiAllApp == 0 ? undefined : this.props.sumNotifiAllApp}
-					onPressRight={() => { Utils.goscreen(this, 'sc_ListChildThongBaoAll', { refesdata: this.refesdata }) }}
+					// notification={this.props.sumNotifiAllApp == 0 ? undefined : this.props.sumNotifiAllApp}
+					// onPressRight={() => { Utils.goscreen(this, 'sc_ListChildThongBaoAll', { refesdata: this.refesdata }) }}
 				/>
 				<LinearGradient
 					start={{ x: 0, y: 0 }}
@@ -130,176 +83,181 @@ class Welcome extends Component {
 					colors={isTransparent ? [colors.nocolor, colors.nocolor] : ['#f8b199', '#f27972']}
 					style={{ height: 130 }}>
 				</LinearGradient >
-				<View style={{ backgroundColor: 'white', paddingVertical: 10, paddingHorizontal: 15, marginHorizontal: 20, top: -100, borderRadius: 6 }} >
-					<View style={[nstyles.nrow, { justifyContent: 'space-between', alignItems: 'center' }]}>
-						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_ListStudentAttendance')}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.bgDiemDanh}>
-							</ImageBackground>
-							<Text style={[styles.nTextMenuBig]}>Điểm danh</Text>
-						</TouchableOpacity>
+				<View style={{ marginTop: -130, flex: 1 }} >
+					<View style={{ paddingVertical: 10, paddingHorizontal: 15, alignItems: 'center' }}>
+						<Text style={{ fontSize: fs(20), fontWeight: '700', color: 'white', fontStyle: 'italic' }}>{'Giáo viên:  '}{'Lê Phạm Tuấn Kiệt'}</Text>
+					</View>
+					<ScrollView style={{ marginHorizontal: 10,paddingVertical:10, backgroundColor: 'white', borderRadius: 6 }} >
+						<View style={[nstyles.nrow, { justifyContent: 'space-around', alignItems: 'center' }]}>
+							<TouchableOpacity style={{ flexDirection: 'column' }}
+								onPress={this._clickMenu('sc_ListStudentAttendance')}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.bgDiemDanh}>
+								</ImageBackground>
+								<Text style={[styles.nTextMenuBig]}>Điểm danh</Text>
+							</TouchableOpacity>
 
-						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_ListStudentTuition')}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.bgHocPhi}>
-							</ImageBackground>
-							<Text style={styles.nTextMenuBig}>Học phí</Text>
-						</TouchableOpacity>
-					</View>
-					<View style={[nstyles.nrow, { justifyContent: 'space-between', alignItems: 'center', marginTop: 15 }]}>
-						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_ListChildBaoBai')}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.bgBaoBai}>
-							</ImageBackground>
-							<Text style={styles.nTextMenuBig}>Báo bài</Text>
-							{this.props.sumNotifyBaoBai > 0 ?
-								<View style={styles.vIconNotifyBig}>
-									<Pulse
-										color={colors.redStar}
-										numPulses={3}
-										diameter={width * 0.09}
-										speed={50}
-										duration={2}
-									/>
-									<Image
-										style={{ width: 18, height: 18, tintColor: colors.redStar }}
-										source={Images.icStarReview}>
-									</Image>
-								</View>
-								: null}
-						</TouchableOpacity>
-						<TouchableOpacity style={{ flexDirection: 'column' }} onPress={this._clickMenu('sc_SelectChildChat')}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.bgChat}>
-							</ImageBackground>
-							<Text style={styles.nTextMenuBig}>Trao đổi</Text>
-							{this._countNotifyChilldChat(this.props.listChildChat) > 0 ?
-								<View style={[styles.vIconNotifyBig, { right: -10, }]}>
-									<Pulse
-										color={colors.redStar}
-										numPulses={3}
-										diameter={width * 0.09}
-										speed={50}
-										duration={2}
-									/>
-									<Image
-										style={{ width: 18, height: 18, tintColor: colors.redStar }}
-										source={Images.icStarReview}>
-									</Image>
-								</View>
-								: null}
-						</TouchableOpacity>
-					</View>
-					<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }]}>
-						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_ListChildThongBao')}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.icThonbao}>
-							</ImageBackground>
-							<Text style={styles.nTextMenuBig}>Thông báo</Text>
-							{this.props.sumNotifyBaoBai > 0 ?
-								<View style={styles.vIconNotifyBig}>
-									<Pulse
-										color={colors.redStar}
-										numPulses={3}
-										diameter={width * 0.09}
-										speed={50}
-										duration={2}
-									/>
-									<Image
-										style={{ width: 18, height: 18, tintColor: colors.redStar }}
-										source={Images.icStarReview}>
-									</Image>
-								</View>
-								: null}
-						</TouchableOpacity>
-						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={this._clickMenu('sc_timetable_Stack')}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.icThpiKhoaBieu1}>
-							</ImageBackground>
-							<Text style={styles.nTextMenuBig}>Thời khoá biểu</Text>
-							{this._countNotifyChilldChat(this.props.listChildChat) > 0 ?
-								<View style={[styles.vIconNotifyBig, { right: -10, }]}>
-									<Pulse
-										color={colors.redStar}
-										numPulses={3}
-										diameter={width * 0.09}
-										speed={50}
-										duration={2}
-									/>
-									<Image
-										style={{ width: 18, height: 18, tintColor: colors.redStar }}
-										source={Images.icStarReview}>
-									</Image>
-								</View>
-								: null}
-						</TouchableOpacity>
-					</View>
-					<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-between', marginTop: 15 }]}>
-						<TouchableOpacity style={{ flexDirection: 'column' }}
-							onPress={() => Utils.goscreen(this, 'sc_surveyStack')}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.icKhaoSat}>
-							</ImageBackground>
-							<Text style={styles.nTextMenuBig}>Khảo sát</Text>
-							{this.props.sumNotifyBaoBai > 0 ?
-								<View style={styles.vIconNotifyBig}>
-									<Pulse
-										color={colors.redStar}
-										numPulses={3}
-										diameter={width * 0.09}
-										speed={50}
-										duration={2}
-									/>
-									<Image
-										style={{ width: 18, height: 18, tintColor: colors.redStar }}
-										source={Images.icStarReview}>
-									</Image>
-								</View>
-								: null}
-						</TouchableOpacity>
-						<TouchableOpacity style={{ flexDirection: 'column' }}>
-							<ImageBackground
-								style={nstyles.nIcon120}
-								resizeMode="stretch"
-								source={Images.icoCam}>
-							</ImageBackground>
-							<Text style={styles.nTextMenuBig}>Camera</Text>
-							{this._countNotifyChilldChat(this.props.listChildChat) > 0 ?
-								<View style={[styles.vIconNotifyBig, { right: -10, }]}>
-									<Pulse
-										color={colors.redStar}
-										numPulses={3}
-										diameter={width * 0.09}
-										speed={50}
-										duration={2}
-									/>
-									<Image
-										style={{ width: 18, height: 18, tintColor: colors.redStar }}
-										source={Images.icStarReview}>
-									</Image>
-								</View>
-								: null}
-						</TouchableOpacity>
-					</View>
+							<TouchableOpacity style={{ flexDirection: 'column' }}
+								onPress={this._clickMenu('sc_ListStudentTuition')}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.bgHocPhi}>
+								</ImageBackground>
+								<Text style={styles.nTextMenuBig}>Học phí</Text>
+							</TouchableOpacity>
+						</View>
+						<View style={[nstyles.nrow, { justifyContent: 'space-around', alignItems: 'center', marginTop: 15 }]}>
+							<TouchableOpacity style={{ flexDirection: 'column' }}
+								onPress={this._clickMenu('sc_ListChildBaoBai')}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.bgBaoBai}>
+								</ImageBackground>
+								<Text style={styles.nTextMenuBig}>Báo bài</Text>
+								{this.props.sumNotifyBaoBai > 0 ?
+									<View style={styles.vIconNotifyBig}>
+										<Pulse
+											color={colors.redStar}
+											numPulses={3}
+											diameter={width * 0.09}
+											speed={50}
+											duration={2}
+										/>
+										<Image
+											style={{ width: 18, height: 18, tintColor: colors.redStar }}
+											source={Images.icStarReview}>
+										</Image>
+									</View>
+									: null}
+							</TouchableOpacity>
+							<TouchableOpacity style={{ flexDirection: 'column' }} onPress={this._clickMenu('sc_SelectChildChat')}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.bgChat}>
+								</ImageBackground>
+								<Text style={styles.nTextMenuBig}>Trao đổi</Text>
+								{this._countNotifyChilldChat(this.props.listChildChat) > 0 ?
+									<View style={[styles.vIconNotifyBig, { right: -10, }]}>
+										<Pulse
+											color={colors.redStar}
+											numPulses={3}
+											diameter={width * 0.09}
+											speed={50}
+											duration={2}
+										/>
+										<Image
+											style={{ width: 18, height: 18, tintColor: colors.redStar }}
+											source={Images.icStarReview}>
+										</Image>
+									</View>
+									: null}
+							</TouchableOpacity>
+						</View>
+						<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-around', marginTop: 15 }]}>
+							<TouchableOpacity style={{ flexDirection: 'column' }}
+								onPress={this._clickMenu('sc_ListChildThongBao')}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.icThonbao}>
+								</ImageBackground>
+								<Text style={styles.nTextMenuBig}>Thông báo</Text>
+								{this.props.sumNotifyBaoBai > 0 ?
+									<View style={styles.vIconNotifyBig}>
+										<Pulse
+											color={colors.redStar}
+											numPulses={3}
+											diameter={width * 0.09}
+											speed={50}
+											duration={2}
+										/>
+										<Image
+											style={{ width: 18, height: 18, tintColor: colors.redStar }}
+											source={Images.icStarReview}>
+										</Image>
+									</View>
+									: null}
+							</TouchableOpacity>
+							<TouchableOpacity style={{ flexDirection: 'column' }}
+								onPress={this._clickMenu('sc_timetable_Stack')}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.icThpiKhoaBieu1}>
+								</ImageBackground>
+								<Text style={styles.nTextMenuBig}>Thời khoá biểu</Text>
+								{this._countNotifyChilldChat(this.props.listChildChat) > 0 ?
+									<View style={[styles.vIconNotifyBig, { right: -10, }]}>
+										<Pulse
+											color={colors.redStar}
+											numPulses={3}
+											diameter={width * 0.09}
+											speed={50}
+											duration={2}
+										/>
+										<Image
+											style={{ width: 18, height: 18, tintColor: colors.redStar }}
+											source={Images.icStarReview}>
+										</Image>
+									</View>
+									: null}
+							</TouchableOpacity>
+						</View>
+						<View style={[nstyles.nrow, { alignItems: 'center', justifyContent: 'space-around', marginTop: 15 }]}>
+							<TouchableOpacity style={{ flexDirection: 'column' }}
+								onPress={() => Utils.goscreen(this, 'sc_surveyStack')}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.icKhaoSat}>
+								</ImageBackground>
+								<Text style={styles.nTextMenuBig}>Khảo sát</Text>
+								{this.props.sumNotifyBaoBai > 0 ?
+									<View style={styles.vIconNotifyBig}>
+										<Pulse
+											color={colors.redStar}
+											numPulses={3}
+											diameter={width * 0.09}
+											speed={50}
+											duration={2}
+										/>
+										<Image
+											style={{ width: 18, height: 18, tintColor: colors.redStar }}
+											source={Images.icStarReview}>
+										</Image>
+									</View>
+									: null}
+							</TouchableOpacity>
+							<TouchableOpacity style={{ flexDirection: 'column' }}>
+								<ImageBackground
+									style={nstyles.nIcon120}
+									resizeMode="stretch"
+									source={Images.icoCam}>
+								</ImageBackground>
+								<Text style={styles.nTextMenuBig}>Camera</Text>
+								{this._countNotifyChilldChat(this.props.listChildChat) > 0 ?
+									<View style={[styles.vIconNotifyBig, { right: -10, }]}>
+										<Pulse
+											color={colors.redStar}
+											numPulses={3}
+											diameter={width * 0.09}
+											speed={50}
+											duration={2}
+										/>
+										<Image
+											style={{ width: 18, height: 18, tintColor: colors.redStar }}
+											source={Images.icStarReview}>
+										</Image>
+									</View>
+									: null}
+							</TouchableOpacity>
+						</View>
+					</ScrollView>
 				</View>
 			</View>
 		);

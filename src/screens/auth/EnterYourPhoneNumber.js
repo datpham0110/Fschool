@@ -20,81 +20,43 @@ import { nGlobalKeys } from "../../app/keys/globalKey"
 import { appConfig } from "../../app/Config"
 import Video from "react-native-video"
 import { isIphoneX, ifIphoneX } from "react-native-iphone-x-helper"
-
+export const db1 = db.database();
+import { db } from '../../app/Config';
 
 const { width, height } = Dimensions.get("window")
 export default class EnterYourPhoneNumber extends React.Component {
   constructor(props) {
     super(props)
+    this.password = ""
+    this.phonenumber = ""
     this.state = {
-      phonenumber: "",
       loading: false,
     }
   }
-  _submit = async () => {
-    if (this.state.phonenumber.slice(0, 1) != 0) {
-      Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ bắt đầu bằng số 0", "Đóng");
+  _submit = () => {
+    if (!this.phonenumber.trim()) {
+      Utils.showMsgBoxOK(this, 'Thông báo', 'Vui lòng nhập tên đăng nhập', 'Đóng');
       return;
-    }
-    if (this.state.phonenumber.toString().trim().length == 10) {
-      Utils.nsetStore(nkey.phonenumber, this.state.phonenumber.toString().trim())
-      let res = await enterPhoneNumber(this.state.phonenumber.toString().trim())
-      Utils.nlog('enterPhoneNumber', res)
-      if (res.success == true) {
-        Utils.setGlobal(nGlobalKeys.IdCN, res.data.IdCN)
-        Utils.setGlobal(nGlobalKeys.IdUser, res.data.IdUser)
-        Utils.setGlobal(nGlobalKeys.OTP, res.data.OTP)
-        Utils.setGlobal(nGlobalKeys.OTPTime, res.data.OTPTime)
-        Utils.setGlobal(nGlobalKeys.OTPTimeApp, res.data.OTPTimeApp)
-        // Utils.goscreen(this, "sc_AccuracyOTP")
-        Utils.goscreen(this, "sc_NotifyEnterPhoneNumber")
-      } else if (res.success == false && res.error.code == 103) {
-        Utils.goscreen(this, "sc_AuthLogin")
-      }
-      else {
-        Utils.showMsgBoxOK(this, "Thông báo", "Server đang bảo trì vui lòng thử lại.", "Đóng")
-      }
-    }
-    else if (this.state.phonenumber.toString().trim().length == 0) {
-      Utils.showMsgBoxOK(
-        this,
-        "Thông báo",
-        "Số điện thoại không được để trống",
-        "Đóng"
-      )
-      return;
-    } else {
-        // if (this.state.phonenumber.slice(0, 1) != 0) {
-        //   Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ bắt đầu bằng số 0", "Đóng");
-        //   return;
-        // }
-        Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ phải gồm 10 số", "Đóng")
-        return;
-    }
-  }
-  _fillPhone = (value) => {
-    this.setState({
-      phonenumber: value
-    })
-  }
-  onEnd = () => {
-    this.setState({ loading: false })
-  }
-  onTouch = () => {
-    this.setState({ loading: true })
-  }
-  _fillPhone = (item) => {
-    // if(item.in){
-
-    // }
-    // if (this.state.phonenumber.length == 0) {
-    //   if (item.slice(0, 1) != 0) {
-    //     Utils.showMsgBoxOK(this, "Thông báo", "Số điện thoại hợp lệ bắt đầu bằng số 0", "Đóng");
-    //     return;
-    //   }
-    // }
-    this.setState({ phonenumber: item })
-    // this.state.phonenumber = text
+    };
+    const ref = db1.ref('/Tbl_TaiKhoan')
+    ref.orderByChild('phone')
+      .equalTo(this.phonenumber)
+      .once('value')
+      .then((snapshot) => {
+        const value = snapshot.val();
+        if (value == null) {
+          Utils.showMsgBoxOK(this, 'Thông báo', 'Tài khoản không tồn tại')
+        } else {
+          const data = value[Object.keys(value)[0]];
+          if (data.password == this.password.trim()) {
+            Utils.nsetStore(nkey.phonenumber, this.phonenumber);
+            Utils.nsetStore(nkey.password, this.password);
+            Utils.goscreen(this, "sc_Welcome");
+          } else {
+            Utils.showMsgBoxOK(this, 'Thông báo', 'Mật khẩu không đúng', 'Đóng')
+          };
+        };
+      })
   }
   render() {
     return (
@@ -102,9 +64,6 @@ export default class EnterYourPhoneNumber extends React.Component {
         <ImageBackground
           style={{ height: height, width: width }} resizeMode="stretch" source={Images.bgYSchool} >
           <ScrollView>
-            <TouchableOpacity onPress={this.onTouch} style={{ position: 'absolute', borderRadius: 6, backgroundColor: colors.colorPink3, top: 0, right: 0, marginTop: isIphoneX() ? 50 : 25, marginRight: 10, padding: 5 }}>
-              <Text style={{ fontWeight: "600", fontSize: sizes.sizes.sText13, color: 'white', textAlign: "right" }}>HƯỚNG DẪN</Text>
-            </TouchableOpacity>
             <View style={([nstyles.ncontainerX], { marginTop: height / 5 })}>
               <View style={{ justifyContent: "center", marginLeft: width / 5, marginRight: width / 5 }}>
                 <View style={{ alignItems: 'center', marginBottom: 7 }}>
@@ -115,7 +74,22 @@ export default class EnterYourPhoneNumber extends React.Component {
                 </Text>
               </View>
               <View style={{ marginLeft: width / 10, marginRight: width / 10, marginTop: 10 }}>
-                <Input placeholder={"Nhập số điện thoại"} onChangeText={text => this._fillPhone(text)} keyboardType={"number-pad"} />
+                <Input
+                 showIcon={true}
+                 icon={Images.icUser}
+                  placeholder={"Nhập số điện thoại"}
+                  onChangeText={text => (this.phonenumber = text)}
+                  iconStyle={{ marginRight: 10, tintColor: "gray" }}
+                  keyboardType={"number-pad"} />
+                <Input
+                  secureTextEntry={true}
+                  placeholder={"Nhập mật khẩu"}
+                  onChangeText={text => (this.password = text)}
+                  showIcon={true}
+                  icon={Images.icLock}
+                  iconStyle={{ marginRight: 10, tintColor: "gray" }}
+                  keyboardType={"number-pad"}
+                />
                 <ButtonCom
                   onPress={this._submit}
                   style={{ marginTop: 10, backgroundColor: colors.colorPink }}

@@ -16,15 +16,19 @@ import Utils from '../../app/Utils';
 const { width, height } = Dimensions.get("window");
 import { colors, sizes } from "../../styles";
 import { ScrollView } from "react-native-gesture-handler";
-
+export const db1 = db.database();
+import { db } from '../../app/Config';
 class ListChildBaoBai extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            listHocSinh: [],
+        }
     }
     _renderItemChild = ({ item, index }) => {
         return (
             <TouchableOpacity
-                onPress={() => Utils.goscreen(this, 'sc_ListBaoBai', { IDHocSinh: item.IDKhachHang, flagNotifiy: false, IDChiNhanh: item.IDChiNhanh })}
+                onPress={() => Utils.goscreen(this, 'sc_ListBaoBai', { idVideo: item.dataBaoBai[0].linkVideo, dataBaobai: item.dataBaoBai, dbTenHocSinh: item.TenHocSinh, dataBaiTap: item.dataBaoBai[0].BaiKiemTra })}
                 style={{
                     flexDirection: "row",
                     paddingVertical: 8,
@@ -37,20 +41,24 @@ class ListChildBaoBai extends Component {
                     (<Image resizeMode="contain" source={Images.icBe1} style={{ width: width * 0.15, height: width * 0.15, marginLeft: 20 }} />) :
                     (<Image resizeMode="contain" source={Images.icBe2} style={{ width: width * 0.15, height: width * 0.15, marginLeft: 20 }} />)}
                 <View style={{ flexDirection: "column", marginLeft: 10, justifyContent: "center", flex: 1 }}>
-                    <Text style={{ color: "white", fontSize: sizes.sizes.nImgSize18, fontWeight: '700' }}> {item.TenKhachHang}</Text>
-                    <Text style={{ color: "white", fontSize: sizes.sizes.nImgSize16, fontWeight: '600', marginTop: 5 }}>{item.LopHoc}</Text>
+                    <Text style={{ color: "white", fontSize: sizes.sizes.nImgSize18, fontWeight: '700' }}> {item.TenHocSinh}</Text>
                 </View>
-                {item.Soluong > 0 ?
-                    <View style={styles.vIconNotifyBig}>
-                        <Text style={{ color: 'white', fontWeight: '800', fontSize: sizes.sText18 }}>{item.Soluong}</Text>
-                    </View> : null}
-
             </TouchableOpacity>
         );
     };
-
+    componentDidMount() {
+        this.dsHocSinh()
+    }
+    dsHocSinh = async () => {
+        //   //Lấy list
+        db1.ref('/Tbl_BaoBai').on('value', (snapshot) => {
+            let data = snapshot.val();
+            let items = Object.values(data);
+            Utils.nlog('dsHocSinh------------', items)
+            this.setState({ listHocSinh: items })
+        });
+    }
     render() {
-        Utils.nlog('listChildBaoBai', this.props.listChildBaoBai)
         return (
             <View style={[nstyles.ncontainerX, { backgroundColor: colors.white }]}>
                 <HeaderCom
@@ -59,13 +67,9 @@ class ListChildBaoBai extends Component {
                     titleText={'Danh sách học sinh'}
                 />
                 <ScrollView>
-                    {this.props.listChildBaoBai.length == 0 ? 
-                        <Text style={styles.styTitle}>Tài khoản chưa liên kết với học sinh </Text> : 
-                        null
-                    }
                     <FlatList
                         renderItem={this._renderItemChild}
-                        data={this.props.listChildBaoBai}
+                        data={this.state.listHocSinh}
                         keyExtractor={(item, index) => index.toString()}
                         scrollEnabled={false} />
                 </ScrollView>
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 20,
         fontSize: sizes.fs(18),
-        fontWeight: '800', 
+        fontWeight: '800',
         color: colors.colorVeryLightPinkTwo
     },
 })
